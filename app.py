@@ -128,7 +128,7 @@ if OPENAI_API_KEY:
         
         if reset:
             store.clear() 
-            st.success("Chat history cleared!")
+            st.success("Chat history cleared")
     
 
 
