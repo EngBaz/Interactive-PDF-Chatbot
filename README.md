@@ -5,7 +5,7 @@ This project presents a PDF question-answer conversational agent
 1. Create a virtual enviromnent 
     ```console
     $ python -m venv .venv
-    $ .venv\Scripts\ activate.bat
+    $ .venv\Scripts\activate.bat
     ```
     
 2. Install dependencies 
