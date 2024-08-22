@@ -1,4 +1,4 @@
-# Q&A Conversational Agent
+# Q&A Chatbot
 
 This end-to-end project presents an example of a Q&A chatbot for extracting information from an PDF document. To run this project, follow the below steps.
 
