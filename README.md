@@ -22,7 +22,7 @@ Please note that the project is built using OpenAI GPT-4. Thus, it is necessary 
     ```console
     $ pip install langchain huggingface_hub
 
-    os.environ['HUGGINGFACE_API_TOKEN'] = 'your_hugging_face_api_token'
+    $ os.environ['HUGGINGFACE_API_TOKEN'] = 'your_hugging_face_api_token'
     
     ```
 
