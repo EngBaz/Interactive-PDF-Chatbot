@@ -18,11 +18,12 @@ This end-to-end project presents an example of a Q&A chatbot for extracting info
     $ streamlit run app.py
     ```
 Please note that the project is built using OpenAI GPT-4. Thus, it is necessary to have an OpenAI API. Otherwise, if you want to use an open-source LLM, import your model using the steps below.
-
     ```console
+    
     $ pip install langchain huggingface_hub
 
     $ os.environ['HUGGINGFACE_API_TOKEN'] = 'your_hugging_face_api_token'
-    
+
+    $llm = HuggingFaceHub(repo_id="model_name", model_kwargs={"temperature": 0.7, "max_lenght": 64}
     ```
 
