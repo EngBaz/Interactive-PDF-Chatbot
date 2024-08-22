@@ -1,6 +1,6 @@
 # Q&A Conversational Agent
 
-This project presents a PDF question-answer conversational agent for extracting information from an uploaded document. 
+This end-to-end project presents an example of a Q&A for extracting information from an PDF document. 
 
 1. Create a virtual enviromnent 
     ```console
