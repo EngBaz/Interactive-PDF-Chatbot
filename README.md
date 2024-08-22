@@ -21,9 +21,7 @@ Please note that the project is built using OpenAI GPT-4. Thus, it is necessary 
     ```console
     
     $ pip install langchain huggingface_hub
-
     $ os.environ['HUGGINGFACE_API_TOKEN'] = 'your_hugging_face_api_token'
-
-    $llm = HuggingFaceHub(repo_id="model_name", model_kwargs={"temperature": 0.7, "max_lenght": 64}
+    $ llm = HuggingFaceHub(repo_id="model_name", model_kwargs={"temperature": 0.7, "max_lenght": 64}
     ```
 
