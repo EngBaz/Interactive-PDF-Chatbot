@@ -27,7 +27,7 @@ st.title("Q&A Conversational Agent!")
 
 
 
-### A function to configure the retrieval and the RAG chain ###
+### A function to configure the retrieval and the RAG chain with chat history###
 
 def configure_rag_chain(loader):
     
