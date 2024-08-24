@@ -1,7 +1,8 @@
 import streamlit as st
 import os
+import pandas as pd
 
-from apikey import get_apikey
+from utilities import get_apikey
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_community.vectorstores import FAISS
@@ -11,124 +12,154 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from PyPDF2 import PdfReader
+from PyPDF2 import PdfReader 
 
-### Session history function ###
 
-def get_session_history(session_id: str) -> BaseChatMessageHistory:
-    if session_id not in store:
-        store[session_id] = ChatMessageHistory()
-    return store[session_id]
-        
-        
-        
-### Application ###
+st.set_page_config(
+    page_title="ChatLangChain",
+    page_icon="🦜",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+    )
 
-st.title("Conversational Q&A Chatbot🤖")
+st.title("Q&A Conversational Agent!")
 
-OPENAI_API_KEY = get_apikey()
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY 
-
-if OPENAI_API_KEY:
+def configure_rag_chain(loader):
     
-    llm = ChatOpenAI(model='gpt-4',temperature=0, openai_api_key=OPENAI_API_KEY)
-    
-    st.header("Hey, Let's Chat With Your Document!🧐")
-    
-    ### Construct retriever ###
-    
-    uploaded_file = st.file_uploader('please upload your pdf file here!', type="pdf")
-    
-    if uploaded_file is not None:
-        pdf_reader = PdfReader(uploaded_file)
-        data = ""
-        for page in pdf_reader.pages:
-            data += page.extract_text()
-
-        text_splitter = RecursiveCharacterTextSplitter(
+    text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
-        chunk_overlap=20)
+        chunk_overlap=20,
+    )
       
-        texts = text_splitter.split_text(data)
-        db = FAISS.from_texts(texts, OpenAIEmbeddings())
-        retriever = db.as_retriever()
-
+    texts = text_splitter.split_text(loader)
+    vectorstore = FAISS.from_texts(texts, OpenAIEmbeddings())
+    retriever = vectorstore.as_retriever()
     
-        ### Contextualize question ###
-
-        contextualize_system_prompt = """Given a chat history and the latest user question \
+    contextualize_system_prompt = """Given a chat history and the latest user question \
         which might reference context in the chat history, formulate a standalone question \
         which can be understood without the chat history. Do NOT answer the question, \
         just reformulate it if needed and otherwise return it as is."""
-    
-        contextualize_prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", contextualize_system_prompt),
-                MessagesPlaceholder("chat_history"),
-                ("human", "{input}"),
+
+    contextualize_prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", contextualize_system_prompt),
+            MessagesPlaceholder("chat_history"),
+            ("human", "{input}"),
             ]
         )
         
-        history_aware_retriever = create_history_aware_retriever(
-            llm, retriever, contextualize_prompt
+    history_aware_retriever = create_history_aware_retriever(
+        llm, retriever, contextualize_prompt
         )
 
-
-        ### Answer question ###
+    qa_system_prompt = """You are an assistant for question-answering tasks. \
+    Use the following pieces of retrieved context to answer the question. \
+    If you don't know the answer, just say that you don't know. \
+    Use three sentences maximum and keep the answer concise.\
+    {context}"""
         
-        qa_system_prompt = """You are an assistant for question-answering tasks. \
-        Use the following pieces of retrieved context to answer the question. \
-        If you don't know the answer, just say that you don't know. \
-        Use three sentences maximum and keep the answer concise.\
-        {context}"""
-    
-        qa_prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", qa_system_prompt),
-                MessagesPlaceholder("chat_history"),
-                ("human", "{input}"),
+    qa_prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", qa_system_prompt),
+            MessagesPlaceholder("chat_history"),
+            ("human", "{input}"),
             ]
         )
 
-        question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)
+    question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)
 
-        rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)
+    rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)
 
+    store = {}
+        
+    def get_session_history(session_id: str) -> BaseChatMessageHistory:
+        if session_id not in store:
+            store[session_id] = ChatMessageHistory()
+            return store[session_id]
 
-        ### Statefully manage chat history ###
-
-        store = {}
-
-        conversational_rag_chain = RunnableWithMessageHistory(
-            rag_chain,
-            get_session_history,
-            input_messages_key="input",
-            history_messages_key="chat_history",
-            output_messages_key="answer",
+    conversational_rag_chain = RunnableWithMessageHistory(
+        rag_chain,
+        get_session_history,
+        input_messages_key="input",
+        history_messages_key="chat_history",
+        output_messages_key="answer",
         )
 
-        question = st.text_input("Ask questions about your uploaded file!")
+    return conversational_rag_chain
+
+
+###### MAIN ######
+
+OPENAI_API_KEY = get_apikey()
+
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY 
+
+
+if OPENAI_API_KEY:
+    
+    
+    llm = ChatOpenAI(model="gpt-4",temperature=0, openai_api_key=OPENAI_API_KEY)
+    
+    selected_format = st.selectbox(label="Select file format", options=["...", ".pdf", ".csv"])
+
+    uploaded_file = st.file_uploader("Upload a file!")
+    
+    
+    if uploaded_file is not None:
+        
+        
+        if selected_format==".pdf":
             
-        col1, col2 = st.columns([1, 1])
-
-        with col1:
+            
+            pdf_reader = PdfReader(uploaded_file)
+            data = ""
+            for page in pdf_reader.pages:
+                data += page.extract_text()
+                
+            conversational_rag_chain = configure_rag_chain(data)
+            
+            question = st.text_input("Ask any question!")
+ 
             submit = st.button("Submit!")
-        with col2:
-            reset = st.button("Reset Chat!")
-    
-        if submit and question:
-            response = conversational_rag_chain.invoke(
-                {"input": question},
-                config={
-                "configurable": {"session_id": "abc123"}
-                },
-            )["answer"]
+      
+            if submit and question:
+                
+                response = conversational_rag_chain.invoke(
+                    {"input": question},
+                    config={
+                        "configurable": {"session_id": "session1"}
+                        },
+                    )["answer"]
+                
+                st.write(response)
+            
+            
+        elif selected_format==".csv":
+            
+            df = pd.read_csv(uploaded_file)
+            
+            df_string = df.to_string()
+            
+            conversational_rag_chain = configure_rag_chain(df_string)
+            
+            question = st.text_input("Ask any question!")
+            
+            submit = st.button("Submit!")
+      
+            if submit and question:
+                
+                response = conversational_rag_chain.invoke(
+                    {"input": question},
+                    config={
+                        "configurable": {"session_id": "session1"}
+                        },
+                    )["answer"]
+                
+                st.write(response)
         
-            st.write(response)
         
-        if reset:
-            store.clear() 
-            st.success("Chat history cleared!")
+        else:
+            st.success("Please Upload a correct file format!")
     
 
 
