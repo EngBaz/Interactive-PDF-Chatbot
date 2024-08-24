@@ -7,19 +7,12 @@ The agent can handle conversational context and assist in answering questions re
 The project showcases the implementation of a custom chat agent that leverages Langchain, an open-source framework, to interact with users in a conversational manner. The agent answers questios related to a specific uploaded document. This agent is powered by GPT-4 for natural language understanding and generation.
 
 ## Setup
-1. Clone this repository to your local machine by running
-   ```console
-    $ git clone https://github.com/EngBaz/conversational-retrieval-agent.git
-    ```
-   
-2. Install the required dependencies by running 
-    ```console
-    $ pip install -r requirements.txt
-    ```
+1. Clone this repository to your local machine by running <code>git clone https://github.com/EngBaz/conversational-retrieval-agent.git</code>
+    
+2. Install the required dependencies by running <code>pip install -r requirements.txt</code>
 
 3. Obtain the API key from OpenAI
     
-
 4. Note that the project is built using OpenAI GPT4. Thus, it is necessary to have an OpenAI API. Otherwise, for the use of open-source LLMs on huggingface, import yourr model using the steps below.
     ```console
     
