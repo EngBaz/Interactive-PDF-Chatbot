@@ -17,7 +17,7 @@ The project showcases the implementation of a custom chat agent that leverages L
     $ pip install -r requirements.txt
     ```
 
-3. Obtain the API from OpenAI
+3. Obtain the API key from OpenAI
     
 4. Run the application using Streamlit
     ```console
