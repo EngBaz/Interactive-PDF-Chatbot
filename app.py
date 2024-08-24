@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import pandas as pd
+import time
 
 from utilities import get_apikey
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
@@ -23,6 +24,10 @@ st.set_page_config(
     )
 
 st.title("Q&A Conversational Agent!")
+
+
+
+### A function to configure the retrieval and the RAG chain ###
 
 def configure_rag_chain(loader):
     
@@ -88,6 +93,16 @@ def configure_rag_chain(loader):
     return conversational_rag_chain
 
 
+
+### A function to stream the output with Streamlit ### 
+
+def stream_data():
+    for word in response.split(" "):
+        yield word + " "
+        time.sleep(0.02)
+
+
+
 ###### MAIN ######
 
 OPENAI_API_KEY = get_apikey()
@@ -131,7 +146,7 @@ if OPENAI_API_KEY:
                         },
                     )["answer"]
                 
-                st.write(response)
+                st.write_stream(stream_data)
             
             
         elif selected_format==".csv":
@@ -155,7 +170,7 @@ if OPENAI_API_KEY:
                         },
                     )["answer"]
                 
-                st.write(response)
+                st.write_stream(stream_data)
         
         
         else:
