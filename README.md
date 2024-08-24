@@ -12,7 +12,7 @@ The project showcases the implementation of a custom chat agent that leverages L
     $ git clone https://github.com/EngBaz/conversational-retrieval-agent.git
     ```
    
-3. Install dependencies 
+3. Install the required dependencies by running 
     ```console
     $ pip install -r requirements.txt
     ```
