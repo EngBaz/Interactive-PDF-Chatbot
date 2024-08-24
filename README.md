@@ -11,7 +11,7 @@ The project showcases the implementation of a custom chat agent that leverages L
     
 2. Install the required dependencies by running <code>pip install -r requirements.txt</code>
 
-3. Obtain the API key from OpenAI
+3. Obtain an API key from OpenAI
     
 4. Note that the project is built using OpenAI GPT4. Thus, it is necessary to have an OpenAI API. Otherwise, for the use of open-source LLMs on huggingface, import your model using the steps below.
     ```console
@@ -24,9 +24,9 @@ The project showcases the implementation of a custom chat agent that leverages L
 ## Usage
 
 To use the conversational agent:
-1. Run the provided streamlit app: <code> streamlit run app.py </code>
-2. Selet the appropriate file format
+1. In the terminal, rub the streamlit app: <code> streamlit run app.py </code>
+2. Then, select the appropriate file format to upload
 3. Upload your file
-4. Write a specific question about your uploaded file
+4. Write specific questions about the uploaded file
 5. The agent will process the input and respond with relevant information 
    
