@@ -1,6 +1,6 @@
-# Conversational Agent With Langchain and GPT4
+# Conversational Agent With Langchain and OpenAI GPT-4
 
-This end-to-end project presents an example of a Q&A conversational agent using Langchain, OpenAI GPT4 and Streamlit.
+This end-to-end project presents an example of a Q&A conversational agent using Langchain, OpenAI GPT-4 and Streamlit.
 The agent can handle conversational context and assist in answering questions related to an uploaded document.
 
 ## Introduction
