@@ -122,7 +122,7 @@ if OPENAI_API_KEY:
  
             submit = st.button("Submit!")
       
-            if submit and question:
+            if submit:
                 
                 response = conversational_rag_chain.invoke(
                     {"input": question},
@@ -146,7 +146,7 @@ if OPENAI_API_KEY:
             
             submit = st.button("Submit!")
       
-            if submit and question:
+            if submit:
                 
                 response = conversational_rag_chain.invoke(
                     {"input": question},
