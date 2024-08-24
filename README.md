@@ -31,5 +31,5 @@ The project showcases the implementation of a custom chat agent that leverages L
 ## Usage
 
 To use the conversational agent:
-1. Run the provided streamlit app: $ streamlit run app.py
+1. Run the provided streamlit app: <code>streamlit run app.py
    
