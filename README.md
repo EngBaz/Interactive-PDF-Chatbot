@@ -4,6 +4,7 @@ This end-to-end project presents an example of a Q&A conversational agent using 
 The agent can handle conversational context and assist in answering questions related to an uploaded document.
 
 ## Introduction
+The project showcases the implementation of a custom chat agent that leverages Langchain, an open-source framework, to interact with users in a conversational manner. The agent answers questios related to a specific uploaded document. This agent is powered by GPT-4 for natural language understanding and generation.
 1. Create a virtual enviromnent 
     ```console
     $ python -m venv .venv
