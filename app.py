@@ -72,7 +72,6 @@ def configure_rag_chain(loader):
         )
 
     question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)
-
     rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)
 
     store = {}
@@ -106,17 +105,12 @@ def stream_data():
 ###### MAIN ######
 
 OPENAI_API_KEY = get_apikey()
-
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY 
-
 
 if OPENAI_API_KEY:
     
-    
     llm = ChatOpenAI(model="gpt-4",temperature=0, openai_api_key=OPENAI_API_KEY)
-    
     selected_format = st.selectbox(label="Select file format", options=["...", ".pdf", ".csv"])
-
     uploaded_file = st.file_uploader("Upload a file!")
     
     
@@ -125,16 +119,12 @@ if OPENAI_API_KEY:
         
         if selected_format==".pdf":
             
-            
             pdf_reader = PdfReader(uploaded_file)
             data = ""
             for page in pdf_reader.pages:
-                data += page.extract_text()
-                
+                data += page.extract_text()        
             conversational_rag_chain = configure_rag_chain(data)
-            
             question = st.text_input("Ask any question!")
- 
             submit = st.button("Submit!")
       
             if submit:
@@ -145,20 +135,15 @@ if OPENAI_API_KEY:
                         "configurable": {"session_id": "session1"}
                         },
                     )["answer"]
-                
                 st.write_stream(stream_data)
             
             
         elif selected_format==".csv":
             
             df = pd.read_csv(uploaded_file)
-            
             df_string = df.to_string()
-            
             conversational_rag_chain = configure_rag_chain(df_string)
-            
             question = st.text_input("Ask any question!")
-            
             submit = st.button("Submit!")
       
             if submit:
@@ -168,8 +153,7 @@ if OPENAI_API_KEY:
                     config={
                         "configurable": {"session_id": "session1"}
                         },
-                    )["answer"]
-                
+                    )["answer"]  
                 st.write_stream(stream_data)
         
         
