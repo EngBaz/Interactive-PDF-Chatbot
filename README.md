@@ -32,4 +32,8 @@ The project showcases the implementation of a custom chat agent that leverages L
 
 To use the conversational agent:
 1. Run the provided streamlit app: <code>streamlit run app.py
+2. Selet the appropriate file format
+3. Upload your file
+4. Write a specific question about your uploaded file
+5. The agent will process the input and respond with relevant information 
    
