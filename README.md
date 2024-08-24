@@ -1,4 +1,4 @@
-# Conversational Retrieval Agent With Langchain and GPT4
+# Conversational Agent With Langchain and GPT4
 
 This end-to-end project presents an example of a Q&A chatbot for extracting information from a PDF document or a CSV file. To run it, follow the below steps.
 
