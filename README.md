@@ -1,6 +1,6 @@
 # Conversational Retrieval Agent
 
-This end-to-end project presents an example of a Q&A chatbot for extracting information from an PDF document or CSV file. To run it, follow the below steps.
+This end-to-end project presents an example of a Q&A chatbot for extracting information from a PDF document or a CSV file. To run it, follow the below steps.
 
 1. Create a virtual enviromnent 
     ```console
