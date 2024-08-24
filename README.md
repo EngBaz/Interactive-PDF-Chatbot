@@ -24,7 +24,7 @@ The project showcases the implementation of a custom chat agent that leverages L
 ## Usage
 
 To use the conversational agent:
-1. In the terminal, rub the streamlit app: <code> streamlit run app.py </code>
+1. In the terminal, run the streamlit app: <code> streamlit run app.py </code>
 2. Then, select the appropriate file format to upload
 3. Upload your file
 4. Write specific questions about the uploaded file
