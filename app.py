@@ -16,19 +16,21 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from PyPDF2 import PdfReader 
 
 
+# Set up the page of the Streamlit UI 
 st.set_page_config(
-    page_title="ChatLangChain",
+    page_title="Q&A Agent",
     page_icon="🦜",
     layout="wide",
     initial_sidebar_state="collapsed",
     )
+ 
+ 
+# Set API key for OpenAI 
+OPENAI_API_KEY = get_apikey()
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
-st.title("Q&A Conversational Agent!")
 
-
-
-### A function to configure the retrieval and the RAG chain with chat history###
-
+# Function to configure the retrieval and the RAG chain with chat history
 def configure_rag_chain(loader):
     
     text_splitter = RecursiveCharacterTextSplitter(
@@ -92,30 +94,26 @@ def configure_rag_chain(loader):
     return conversational_rag_chain
 
 
-
-### A function to stream the output with Streamlit ### 
-
+# Function to stream the output with Streamlit
 def stream_data():
     for word in response.split(" "):
         yield word + " "
         time.sleep(0.02)
 
 
-
-###### MAIN ######
-
-OPENAI_API_KEY = get_apikey()
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY 
-
 if OPENAI_API_KEY:
     
+    # Set OpenAI LLM and embeddings
     llm = ChatOpenAI(model="gpt-4",temperature=0, openai_api_key=OPENAI_API_KEY)
+    
+    # Set the configuration for streamlit UI
+    st.title("Q&A Conversational Agent!🤖")
     selected_format = st.selectbox(label="Select file format", options=["...", ".pdf", ".csv"])
+
+    # Upload a CSV or PDF file
     uploaded_file = st.file_uploader("Upload a file!")
-    
-    
+
     if uploaded_file is not None:
-        
         
         if selected_format==".pdf":
             
@@ -126,9 +124,8 @@ if OPENAI_API_KEY:
             conversational_rag_chain = configure_rag_chain(data)
             question = st.text_input("Ask any question!")
             submit = st.button("Submit!")
-      
+        
             if submit:
-                
                 response = conversational_rag_chain.invoke(
                     {"input": question},
                     config={
@@ -145,20 +142,18 @@ if OPENAI_API_KEY:
             conversational_rag_chain = configure_rag_chain(df_string)
             question = st.text_input("Ask any question!")
             submit = st.button("Submit!")
-      
+        
             if submit:
-                
                 response = conversational_rag_chain.invoke(
                     {"input": question},
-                    config={
-                        "configurable": {"session_id": "session1"}
-                        },
-                    )["answer"]  
+                        config={
+                            "configurable": {"session_id": "session1"}
+                            },
+                        )["answer"]
                 st.write_stream(stream_data)
-        
-        
+                
         else:
-            st.success("Please Upload a correct file format!")
+            st.error("Please select a correct file format!")
     
 
 
