@@ -19,11 +19,8 @@ The project showcases the implementation of a custom chat agent that leverages L
 
 3. Obtain the API key from OpenAI
     
-4. Run the application using Streamlit
-    ```console
-    $ streamlit run app.py
-    ```
-5. Note that the project is built using OpenAI GPT4. Thus, it is necessary to have an OpenAI API. Otherwise, for the use of open-source LLMs on huggingface, import yourr model using the steps below.
+
+4. Note that the project is built using OpenAI GPT4. Thus, it is necessary to have an OpenAI API. Otherwise, for the use of open-source LLMs on huggingface, import yourr model using the steps below.
     ```console
     
     $ pip install langchain huggingface_hub
@@ -31,3 +28,8 @@ The project showcases the implementation of a custom chat agent that leverages L
     $ llm = HuggingFaceHub(repo_id="model_name", model_kwargs={'temperature': 0.7, 'max_length': 64})
     ```
 
+## Usage
+
+To use the conversational agent:
+1. Run the provided streamlit app:4. $ streamlit run app.py
+   
