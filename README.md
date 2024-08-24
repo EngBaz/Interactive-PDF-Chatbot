@@ -1,6 +1,7 @@
 # Conversational Agent With Langchain and GPT4
 
-This end-to-end project presents an example of a Q&A chatbot for extracting information from a PDF document or a CSV file. To run it, follow the below steps.
+This end-to-end project presents an example of a Q&A conversational agent using Langchain, OpenAI GPT4 and Streamlit.
+The agent can handle conversational context and assist in answering questions related to an uploaded document.
 
 1. Create a virtual enviromnent 
     ```console
