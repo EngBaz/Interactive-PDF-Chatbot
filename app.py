@@ -100,7 +100,6 @@ def stream_data():
         yield word + " "
         time.sleep(0.02)
 
-
 if OPENAI_API_KEY:
     
     # Set OpenAI LLM and embeddings
