@@ -108,51 +108,49 @@ if OPENAI_API_KEY:
     
     # Set the configuration for streamlit UI
     st.title("Q&A Conversational Agent!🤖")
-    selected_format = st.selectbox(label="Select file format", options=["...", ".pdf", ".csv"])
-
+    selected_format = st.selectbox(label="Select file format", options=["...", "pdf", "csv"])
+        
     # Upload a CSV or PDF file
     uploaded_file = st.file_uploader("Upload a file!")
-
-    if uploaded_file is not None:
         
-        if selected_format == ".pdf":
+    if uploaded_file is not None and uploaded_file.type == f"application/{selected_format}":
+                
+        pdf_reader = PdfReader(uploaded_file)
+        data = ""
+        for page in pdf_reader.pages:
+            data += page.extract_text()        
+        conversational_rag_chain = configure_rag_chain(data)
+        question = st.text_input("Ask any question!")
+        submit = st.button("Submit!")
+        
+        if submit:
+            response = conversational_rag_chain.invoke(
+                {"input": question},
+                config={
+                    "configurable": {"session_id": "session1"}
+                    },
+                )["answer"]
+            st.write_stream(stream_data)
             
-            pdf_reader = PdfReader(uploaded_file)
-            data = ""
-            for page in pdf_reader.pages:
-                data += page.extract_text()        
-            conversational_rag_chain = configure_rag_chain(data)
-            question = st.text_input("Ask any question!")
-            submit = st.button("Submit!")
+            
+    elif uploaded_file is not None and uploaded_file.type == f"text/{selected_format}":
         
-            if submit:
-                response = conversational_rag_chain.invoke(
-                    {"input": question},
+        df = pd.read_csv(uploaded_file)
+        df_string = df.to_string()
+        conversational_rag_chain = configure_rag_chain(df_string)
+        question = st.text_input("Ask any question!")
+        submit = st.button("Submit!")
+        
+        if submit:
+            response = conversational_rag_chain.invoke(
+                {"input": question},
                     config={
                         "configurable": {"session_id": "session1"}
                         },
                     )["answer"]
-                st.write_stream(stream_data)
-            
-            
-        elif selected_format == ".csv":
-            
-            df = pd.read_csv(uploaded_file)
-            df_string = df.to_string()
-            conversational_rag_chain = configure_rag_chain(df_string)
-            question = st.text_input("Ask any question!")
-            submit = st.button("Submit!")
-        
-            if submit:
-                response = conversational_rag_chain.invoke(
-                    {"input": question},
-                        config={
-                            "configurable": {"session_id": "session1"}
-                            },
-                        )["answer"]
-                st.write_stream(stream_data)
+            st.write_stream(stream_data)
                 
-        else:
+    else:
             st.error("Please select a correct file format!")
     
 
