@@ -34,13 +34,13 @@ os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 def configure_rag_chain(loader):
     
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=20,
+        chunk_size=500,
+        chunk_overlap=40,
     )
       
     texts = text_splitter.split_text(loader)
     vectorstore = FAISS.from_texts(texts, OpenAIEmbeddings())
-    retriever = vectorstore.as_retriever()
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
     
     contextualize_system_prompt = """Given a chat history and the latest user question \
         which might reference context in the chat history, formulate a standalone question \
