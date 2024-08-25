@@ -115,7 +115,7 @@ if OPENAI_API_KEY:
 
     if uploaded_file is not None:
         
-        if selected_format==".pdf":
+        if selected_format == ".pdf":
             
             pdf_reader = PdfReader(uploaded_file)
             data = ""
@@ -135,7 +135,7 @@ if OPENAI_API_KEY:
                 st.write_stream(stream_data)
             
             
-        elif selected_format==".csv":
+        elif selected_format == ".csv":
             
             df = pd.read_csv(uploaded_file)
             df_string = df.to_string()
