@@ -13,7 +13,7 @@ The project showcases the implementation of a custom chat agent that leverages L
 
 3. Obtain an API key from OpenAI
     
-4. Note that the project is built using OpenAI GPT4. Thus, it is necessary to have an OpenAI API. Otherwise, for the use of open-source LLMs on huggingface, import your model using the steps below.
+4. Note that the project is built using OpenAI GPT-4. Thus, it is necessary to have an OpenAI API. Otherwise, for the use of open-source LLMs on huggingface, import your model using the steps below.
     ```console
     
     $ pip install langchain huggingface_hub
