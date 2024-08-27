@@ -34,8 +34,8 @@ os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 def configure_rag_chain(loader):
     
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=40,
+        chunk_size=3000,
+        chunk_overlap=50,
     )
       
     texts = text_splitter.split_text(loader)
