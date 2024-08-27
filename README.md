@@ -11,9 +11,11 @@ The project showcases the implementation of a custom chat agent that leverages L
     
 2. Install the required dependencies by running <code>pip install -r requirements.txt</code>
 
-3. Obtain an API key from OpenAI
+3. Create a virtual enviromnent
+
+4. Obtain an API key from OpenAI
     
-4. Note that the project is built using OpenAI GPT-4. Thus, it is necessary to have an OpenAI API key. Otherwise, for the use of open-source LLMs on huggingface, import your model using the steps below.
+5. Note that the project is built using OpenAI GPT-4. Thus, it is necessary to have an OpenAI API key. Otherwise, for the use of open-source LLMs on huggingface, import your model using the steps below.
     ```console
     
     $ pip install langchain huggingface_hub
