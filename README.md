@@ -19,7 +19,6 @@ The project showcases the implementation of a custom chat agent that leverages L
 
 3. Create a virtual enviromnent
    ```console
-    
     $ python -m venv .venv
     $ .venv\Scripts\activate.bat
     ```
