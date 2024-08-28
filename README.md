@@ -18,6 +18,11 @@ The project showcases the implementation of a custom chat agent that leverages L
 2. Install the required dependencies by running <code>pip install -r requirements.txt</code>
 
 3. Create a virtual enviromnent
+   ```console
+    
+    $ python -m venv .venv
+    $ .venv\Scripts\activate.bat
+    ```
 
 4. Obtain an API key from OpenAI
     
@@ -33,7 +38,7 @@ The project showcases the implementation of a custom chat agent that leverages L
 
 To use the conversational agent:
 1. In the terminal, run the streamlit app: <code> streamlit run app.py </code>
-2. Then, select the appropriate format of the file to upload
+2. Select the appropriate format of your file 
 3. Upload your file
 4. Write a specific question about the uploaded file
 5. The agent will process the input and respond with relevant information 
