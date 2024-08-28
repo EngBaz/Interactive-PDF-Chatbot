@@ -51,16 +51,5 @@ This section provides a brief summary of the techniques used to develop this pro
 
 #### 1. Hybrid Search
 
-Hybrid search is a search method that combines the strengths of traditional keyword-based search and semantic search. It utilises the precision of keyword search with the contextual understanding and relevance of semantic search. By incorporating both approaches, hybrid search aims to deliver more accurate and comprehensive search results.
-
-- Keyword Search
-
-BM25 is a ranking algorithm that calculates how relevant a document is to a search query. It's an extension of th the TF-IDF method and generates a sparse vector. BM25 is used to improve search results by ranking documents based on their relevance to the user's query.
-
-- Semantic Search
-
-Semantic search is a more advanced way to find information. Unlike keyword search, which only looks for matching words, semantic search understands the meaning behind the words. This leads to better results. To do this, it measures how similar the search query is to the documents using scores. In this project, <code>cosine similarity</code> is used for this measurement.
-
-This project combines semantic and keyword search techniques using FAISS as a vectorstore. The Langchain <code>EnsembleRetriever</code> tool is used to integrate these two approaches, providing more accurate search results.
-
+Hybrid search combines the precision of traditional <code>keyword search</code> with the contextual understanding of <code>semantic search</code>. This approach aims to deliver more accurate and comprehensive results. In this project, a <code>hybrid search</code> system using <code>FAISS</code> as a vector database is implemented. The Langchain <code>EnsembleRetriever</code> tool integrates these two search methods, providing a more effective way to find information.
    
