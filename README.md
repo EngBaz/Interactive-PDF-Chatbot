@@ -45,7 +45,7 @@ To use the conversational agent:
 4. Write a specific question about the uploaded file
 5. The agent will process the input and respond with relevant information
 
-## Description
+## Implementation
 
 This section provides a brief summary of the techniques used to develop this project.
 
