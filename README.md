@@ -8,7 +8,7 @@ The agent can handle conversational context and assist in answering questions re
 - [Introduction](#introduction)
 - [Setup](#setup)
 - [Usage](#usage)
-- [Project Desciption](#Project Description)
+- [Project Description](#Project Description)
 
 ## Introduction
 The project showcases the implementation of a custom chat agent that leverages Langchain, an open-source framework, to interact with users in a conversational manner. The agent answers questions related to a specific uploaded document. This agent is powered by GPT-4 for natural language understanding and generation.
@@ -43,5 +43,5 @@ To use the conversational agent:
 4. Write a specific question about the uploaded file
 5. The agent will process the input and respond with relevant information
 
-## Project Dsecription
+## Project Description
    
