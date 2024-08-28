@@ -45,7 +45,7 @@ To use the conversational agent:
 
 ## Description
 
-This section will provide a brief summary of the techniques used to carry out this project
+This section will provide a brief summary of the techniques used to carry out this project.
 
 #### 1. Hybrid Search
 
