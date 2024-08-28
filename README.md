@@ -51,5 +51,5 @@ This section provides a brief summary of the techniques used to develop this pro
 
 #### 1. Hybrid Search
 
-Hybrid search combines the precision of traditional <code>keyword search</code> with the contextual understanding of <code>semantic search</code>. This approach aims to deliver more accurate and comprehensive results. In this project, a <code>hybrid search</code> system using <code>FAISS</code> as a vector database is implemented. The Langchain <code>EnsembleRetriever</code> tool integrates these two search methods, providing a more effective way to find information.
+Hybrid search combines the precision of traditional <code>keyword search</code> with the contextual understanding of <code>semantic search</code>. This approach aims to provide more accurate and comprehensive results. In this project, a <code>hybrid search</code> system is implemented using <code>FAISS</code> as a vector database. The Langchain <code>EnsembleRetriever</code> tool integrates these two search methods, providing a more effective way to find information.
    
