@@ -45,5 +45,7 @@ To use the conversational agent:
 
 ## Description
 
+### 1. Hybrid Search
+
 **Hybrid search** is a search method that combines the strengths of traditional keyword-based search and semantic search. It utilises the precision of keyword search with the contextual understanding and relevance of semantic search. By incorporating both approaches, hybrid search aims to deliver more accurate and comprehensive search results.
    
