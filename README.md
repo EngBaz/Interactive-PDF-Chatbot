@@ -14,7 +14,9 @@ The agent can handle conversational context and assist in answering questions re
 The project showcases the implementation of a custom chat agent that leverages Langchain, an open-source framework, to interact with users in a conversational manner. The agent answers questions related to a specific uploaded document. This agent is powered by GPT-4 for natural language understanding and generation.
 
 ## Setup
-1. Clone this repository to your local machine: <code>git clone github.com/EngBaz/conversational-retrieval-agent.git</code>
+
+To setup this project on your local machine, follow the below steps:
+1. Clone this repository: <code>git clone github.com/EngBaz/conversational-retrieval-agent.git</code>
     
 2. Install the required dependencies by running <code>pip install -r requirements.txt</code>
 
