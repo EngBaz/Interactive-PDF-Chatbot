@@ -13,6 +13,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain.retrievers import BM25Retriever, EnsembleRetriever
 from PyPDF2 import PdfReader 
 
 
@@ -40,7 +41,10 @@ def configure_rag_chain(loader):
       
     texts = text_splitter.split_text(loader)
     vectorstore = FAISS.from_texts(texts, OpenAIEmbeddings())
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
+    similarity_retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
+    keyword_retriever = BM25Retriever.from_texts(texts)
+    keyword_retriever.k = 5
+    ensemble_retriever = EnsembleRetriever(retrievers=[similarity_retriever, keyword_retriever], weights=[0.5, 0.5])
     
     contextualize_system_prompt = """Given a chat history and the latest user question \
         which might reference context in the chat history, formulate a standalone question \
@@ -56,7 +60,7 @@ def configure_rag_chain(loader):
         )
         
     history_aware_retriever = create_history_aware_retriever(
-        llm, retriever, contextualize_prompt
+        llm, ensemble_retriever, contextualize_prompt
         )
 
     qa_system_prompt = """You are an assistant for question-answering tasks. \
@@ -121,9 +125,9 @@ if OPENAI_API_KEY:
             data += page.extract_text()        
         conversational_rag_chain = configure_rag_chain(data)
         question = st.text_input("Ask any question!")
-        submit = st.button("Submit!")
+        answer = st.button("Answer!")
         
-        if submit:
+        if answer:
             response = conversational_rag_chain.invoke(
                 {"input": question},
                 config={
@@ -139,9 +143,9 @@ if OPENAI_API_KEY:
         df_string = df.to_string()
         conversational_rag_chain = configure_rag_chain(df_string)
         question = st.text_input("Ask any question!")
-        submit = st.button("Submit!")
+        answer = st.button("Answer!")
         
-        if submit:
+        if answer:
             response = conversational_rag_chain.invoke(
                 {"input": question},
                     config={
@@ -152,9 +156,7 @@ if OPENAI_API_KEY:
                 
     else:
             st.error("Please select a correct file format!")
-    
-
-
+        
 
 
 

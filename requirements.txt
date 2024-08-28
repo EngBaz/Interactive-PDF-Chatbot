@@ -3,3 +3,4 @@ tiktoken
 faiss-cpu
 PyPDF2
 OpenAI
+rank_bm25
