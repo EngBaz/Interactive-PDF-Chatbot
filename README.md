@@ -43,5 +43,5 @@ To use the conversational agent:
 4. Write a specific question about the uploaded file
 5. The agent will process the input and respond with relevant information
 
-## Project Description
+## Description
    
