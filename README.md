@@ -57,8 +57,8 @@ BM25 is a ranking algorithm that calculates how relevant a document is to a sear
 
 * Semantic Search
 
-Semantic search is a more sophisticated approach to finding information than traditional keyword-based search. Instead of simply matching keywords, it tries to understand the underlying meaning and context of a search query and the documents being searched. This allows for more accurate and relevant search results.
+Semantic search is a more advanced way to find information. Unlike keyword search, which only looks for matching words, semantic search understands the meaning behind the words. This leads to better results. To do this, it measures how similar the search query is to the documents using scores. In this project, <code>cosine similarity</code> is used for this measurement.
 
-This project combines semantic and keyword search techniques using FAISS as a vectorstore. The Langchain <code>EnsembleRetriever</code> tool is used to integrate these two approaches, providing more comprehensive and accurate search results.
+This project combines semantic and keyword search techniques using FAISS as a vectorstore. The Langchain <code>EnsembleRetriever</code> tool is used to integrate these two approaches, providing more accurate search results.
 
    
