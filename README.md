@@ -44,4 +44,10 @@ To use the conversational agent:
 5. The agent will process the input and respond with relevant information
 
 ## Description
+
+This section will provide a brief summary of the techniques used to carry out this project.
+
+#### 1. Hybrid Search
+
+Hybrid search is a search method that combines the strengths of traditional keyword-based search and semantic search. It utilises the precision of keyword search with the contextual understanding and relevance of semantic search. By incorporating both approaches, hybrid search aims to deliver more accurate and comprehensive search results.
    
