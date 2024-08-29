@@ -13,9 +13,13 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain.retrievers import EnsembleRetriever
+from langchain.retrievers import ContextualCompressionRetriever, EnsembleRetriever
 from langchain_community.retrievers import BM25Retriever
-from PyPDF2 import PdfReader 
+from langchain.retrievers.document_compressors import CohereRerank
+from PyPDF2 import PdfReader
+
+from dotenv import load_dotenv
+load_dotenv()
 
 
 # Set up the page of the Streamlit UI 
@@ -26,7 +30,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
     )
  
- 
+# Set API key for Cohere
+COHERE_API_KEY = os.environ["COHERE_API_KEY"]
+
 # Set API key for OpenAI 
 OPENAI_API_KEY = get_apikey()
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
@@ -48,6 +54,10 @@ def configure_rag_chain(loader):
     ensemble_retriever = EnsembleRetriever(retrievers=[similarity_retriever, keyword_retriever], 
                                            weights=[0.5, 0.5])
     
+    compressor = CohereRerank()
+    compression_retriever = ContextualCompressionRetriever(
+    base_compressor=compressor, base_retriever=ensemble_retriever)
+    
     contextualize_system_prompt = """Given a chat history and the latest user question \
         which might reference context in the chat history, formulate a standalone question \
         which can be understood without the chat history. Do NOT answer the question, \
@@ -62,7 +72,7 @@ def configure_rag_chain(loader):
         )
         
     history_aware_retriever = create_history_aware_retriever(
-        llm, ensemble_retriever, contextualize_prompt
+        llm, compression_retriever, contextualize_prompt
         )
 
     qa_system_prompt = """You are an assistant for question-answering tasks. \
