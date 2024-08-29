@@ -45,7 +45,8 @@ def configure_rag_chain(loader):
     similarity_retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
     keyword_retriever = BM25Retriever.from_texts(texts)
     keyword_retriever.k = 5
-    ensemble_retriever = EnsembleRetriever(retrievers=[similarity_retriever, keyword_retriever], weights=[0.5, 0.5])
+    ensemble_retriever = EnsembleRetriever(retrievers=[similarity_retriever, keyword_retriever], 
+                                           weights=[0.5, 0.5])
     
     contextualize_system_prompt = """Given a chat history and the latest user question \
         which might reference context in the chat history, formulate a standalone question \
