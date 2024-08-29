@@ -1,4 +1,4 @@
-# Conversational Agent with Langchain and OpenAI GPT-4
+# RAG System with Langchain, FAISS and OpenAI GPT-4
 
 This end-to-end project presents an example of a Q&A conversational agent using Langchain ecosystem, OpenAI GPT-4, FAISS vectorstore for RAG, and Streamlit.
 The agent can handle conversational context and assist in answering questions related to an uploaded document.
