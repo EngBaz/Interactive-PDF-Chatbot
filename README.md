@@ -51,5 +51,6 @@ This section provides a brief summary of the techniques used to develop this pro
 
 #### 1. Hybrid Search with Rerank Model
 
-Hybrid search combines the precision of traditional <code>keyword search</code> with the contextual understanding of <code>semantic search</code>. This approach aims to provide more accurate and comprehensive results. In this project, a <code>hybrid search</code> system is implemented using <code>FAISS</code> as a vector database. The Langchain <code>EnsembleRetriever</code> tool integrates these two search methods, providing a more effective way to find information. A model by Cohere AI is added after the hybrid search to rerank the most relevant documents for a better retrieval. 
+A hybrid search system was built using <code>FAISS</code> as a vector database. This system combines the precision of <code>keyword</code> search with the contextual understanding of <code>semantic search</code>, aiming for more accurate and comprehensive results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search methods. After the initial search, a Cohere AI model is used to rerank the most relevant documents, further enhancing retrieval quality.
+
    
