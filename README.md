@@ -49,8 +49,12 @@ To use the conversational agent:
 
 This section provides a brief summary of the techniques used to develop this project.
 
-#### 1. Hybrid Search with Rerank Model
+#### 1. Semantic Chunking
 
-A hybrid search system was built using <code>FAISS</code> as a vector database. This system combines the precision of <code>keyword search</code>with the contextual understanding of <code>semantic search</code>, aiming for more accurate and comprehensive results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search methods. After the initial search, a Cohere AI model is used to rerank the most relevant documents, further enhancing retrieval quality.
+A <code>sementic chunking</code> is used to build the RAG system. In contrast to the <code>text chunking</code> which just splits the documents based on separators, semantic chunking considers the relationships within the text. It divides the text into meaningful, semantically complete chunks. This approach as shown to give more accurate results during retrieval than the simple text splitter. But tt is slower compared to the previous chunking strategy.
+
+#### 2. Hybrid Search with Rerank Model
+
+A <code>hybrid search</code> system was built using <code>FAISS</code> as a vector database. This technique combines the <code>keyword search</code>with the contextual understanding of the <code>semantic search</code>, aiming for more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search methods. A reranking model by Cohere AI is used after the hybrid search to rerank the most relevant documents, further enhancing retrieval quality.
 
    
