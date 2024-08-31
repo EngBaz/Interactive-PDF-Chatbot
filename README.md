@@ -26,7 +26,7 @@ To setup this project on your local machine, follow the below steps:
     $ .venv\Scripts\activate.bat
     ```
 
-4. Obtain an API key from OpenAI
+4. Obtain an API key from OpenAI and Cohere AI. Store the Cohere API key in a <code>.env</code> file with the corresponsding name <code>COHERE_API_KEY</code>.
     
 5. Note that the project is built using OpenAI GPT-4. Thus, it is necessary to have an OpenAI API key. Otherwise, for the use of open-source LLMs on huggingface, import your model using the steps below.
     ```console
@@ -49,8 +49,12 @@ To use the conversational agent:
 
 This section provides a brief summary of the techniques used to develop this project.
 
-#### 1. Hybrid Search with Rerank Model
+#### 1. Semantic Chunking
 
-A hybrid search system was built using <code>FAISS</code> as a vector database. This system combines the precision of <code>keyword search</code>with the contextual understanding of <code>semantic search</code>, aiming for more accurate and comprehensive results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search methods. After the initial search, a Cohere AI model is used to rerank the most relevant documents, further enhancing retrieval quality.
+<code>Semantic chunking</code> is employed in building RAG systems to enhance retrieval accuracy. Unlike <code>text chunking</code>, which simply divides documents based on separators, semantic chunking considers the relationships within the text, segmenting it into meaningful and semantically complete chunks. While this approach yields more precise retrieval results compared to basic text splitting, it is slower in performance.
+
+#### 2. Hybrid Search with Rerank Model
+
+A <code>hybrid search</code> system is developed with <code>FAISS</code> (Facebook AI similarity search) as a vector database. This method merges <code>keyword search</code> with the contextual insights of <code>semantic search</code> to deliver more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search approaches. To further improve retrieval quality, a reranking model from Cohere AI is applied after the hybrid search to reorder the most relevant documents.
 
    
