@@ -26,7 +26,7 @@ To setup this project on your local machine, follow the below steps:
     $ .venv\Scripts\activate.bat
     ```
 
-4. Obtain an API key from OpenAI and Cohere AI. Create a <code>.env</code> file and insert the API keys with the name <code>COHERE_API_KEY</code>
+4. Obtain an API key from OpenAI and Cohere AI. Store the Cohere API key in a <code>.env</code> file with the corresponsding name <code>COHERE_API_KEY</code>.
     
 5. Note that the project is built using OpenAI GPT-4. Thus, it is necessary to have an OpenAI API key. Otherwise, for the use of open-source LLMs on huggingface, import your model using the steps below.
     ```console
