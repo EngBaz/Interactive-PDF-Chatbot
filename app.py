@@ -12,7 +12,7 @@ from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_experimental.text_splitter import SemanticChunker 
 from langchain.retrievers import ContextualCompressionRetriever, EnsembleRetriever
 from langchain_community.retrievers import BM25Retriever
 from langchain.retrievers.document_compressors import CohereRerank
@@ -24,7 +24,7 @@ load_dotenv()
 
 # Set up the page of the Streamlit UI 
 st.set_page_config(
-    page_title="Q&A Agent",
+    page_title="RAG System",
     page_icon="🦜",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -41,19 +41,17 @@ os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 # Function to configure the retrieval and the RAG chain with chat history
 def configure_rag_chain(loader):
     
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=3000,
-        chunk_overlap=50,
-    )
-      
-    texts = text_splitter.split_text(loader)
-    vectorstore = FAISS.from_texts(texts, OpenAIEmbeddings())
+    # Semantic chunking
+    semantic_chunker = SemanticChunker(OpenAIEmbeddings(), breakpoint_threshold_type="percentile")
+    docs = semantic_chunker.create_documents([loader])
+    vectorstore = FAISS.from_documents(docs, OpenAIEmbeddings())
+    
+    # Hybrid search with reranking
     similarity_retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
-    keyword_retriever = BM25Retriever.from_texts(texts)
+    keyword_retriever = BM25Retriever.from_documents(docs)
     keyword_retriever.k = 5
     ensemble_retriever = EnsembleRetriever(retrievers=[similarity_retriever, keyword_retriever], 
                                            weights=[0.5, 0.5])
-    
     compressor = CohereRerank()
     compression_retriever = ContextualCompressionRetriever(
     base_compressor=compressor, base_retriever=ensemble_retriever)
@@ -78,7 +76,7 @@ def configure_rag_chain(loader):
     qa_system_prompt = """You are an assistant for question-answering tasks. \
     Use the following pieces of retrieved context to answer the question. \
     If you don't know the answer, just say that you don't know. \
-    Use three sentences maximum and keep the answer concise.\
+    Keep the answer concise and clear.\
     {context}"""
         
     qa_prompt = ChatPromptTemplate.from_messages(
@@ -120,7 +118,7 @@ def stream_data():
 if OPENAI_API_KEY:
     
     # Set OpenAI LLM and embeddings
-    llm = ChatOpenAI(model="gpt-4",temperature=0, openai_api_key=OPENAI_API_KEY)
+    llm = ChatOpenAI(model="gpt-4o-mini",temperature=0, openai_api_key=OPENAI_API_KEY)
     
     # Set the configuration for streamlit UI
     st.title("Q&A Conversational Agent!🤖")
