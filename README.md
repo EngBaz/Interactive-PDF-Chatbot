@@ -51,10 +51,10 @@ This section provides a brief summary of the techniques used to develop this pro
 
 #### 1. Semantic Chunking
 
-A <code>sementic chunking</code> is used to build the RAG system. In contrast to the <code>text chunking</code> which just splits the documents based on separators, semantic chunking considers the relationships within the text. It divides the text into meaningful, semantically complete chunks. This approach as shown to give more accurate results during retrieval than the simple text splitter. But tt is slower compared to the previous chunking strategy.
+<code>Semantic chunking</code> is employed in building RAG systems to enhance retrieval accuracy. Unlike <code>text chunking</code>, which simply divides documents based on separators, semantic chunking considers the relationships within the text, segmenting it into meaningful and semantically complete chunks. While this approach yields more precise retrieval results compared to basic text splitting, it is slower in performance.
 
 #### 2. Hybrid Search with Rerank Model
 
-A <code>hybrid search</code> system was built using <code>FAISS</code> as a vector database. This technique combines the <code>keyword search</code>with the contextual understanding of the <code>semantic search</code>, aiming for more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search methods. A reranking model by Cohere AI is used after the hybrid search to rerank the most relevant documents, further enhancing retrieval quality.
+A <code>hybrid search</code> system was developed utilizing <code>FAISS</code> as a vector database. This method merges <code>keyword search</code> with the contextual insights of <code>semantic search</code> to deliver more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search approaches. To further improve retrieval quality, a reranking model from Cohere AI is applied after the hybrid search to reorder the most relevant documents.
 
    
