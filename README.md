@@ -55,6 +55,6 @@ This section provides a brief summary of the techniques used to develop this pro
 
 #### 2. Hybrid Search with Rerank Model
 
-A <code>hybrid search</code> system was developed utilizing <code>FAISS</code> as a vector database. This method merges <code>keyword search</code> with the contextual insights of <code>semantic search</code> to deliver more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search approaches. To further improve retrieval quality, a reranking model from Cohere AI is applied after the hybrid search to reorder the most relevant documents.
+A <code>hybrid search</code> system is developed with <code>FAISS</code> (Facebook AI similarity search) as a vector database. This method merges <code>keyword search</code> with the contextual insights of <code>semantic search</code> to deliver more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search approaches. To further improve retrieval quality, a reranking model from Cohere AI is applied after the hybrid search to reorder the most relevant documents.
 
    
