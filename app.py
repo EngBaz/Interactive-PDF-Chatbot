@@ -22,7 +22,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-#Set up the page of the Streamlit UI 
+# Set up the page of the Streamlit UI 
 st.set_page_config(
     page_title="RAG System",
     page_icon="🦜",
@@ -122,7 +122,7 @@ if OPENAI_API_KEY:
     llm = ChatOpenAI(model="gpt-4o-mini",temperature=0, openai_api_key=OPENAI_API_KEY)
     
     # Set the configuration for streamlit UI
-    st.title("Q&A Conversational Agent!🤖")
+    st.title("Q&A RAG System!🤖")
     selected_format = st.selectbox(label="Select file format", options=["...", "pdf", "csv"])
         
     # Upload a CSV or PDF file
@@ -164,7 +164,7 @@ if OPENAI_API_KEY:
                         },
                     )["answer"]
             st.write_stream(stream_data)
-                
+    
     else:
             st.error("Please select a correct file format!")
         
