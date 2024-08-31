@@ -22,7 +22,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-# Set up the page of the Streamlit UI 
+#Set up the page of the Streamlit UI 
 st.set_page_config(
     page_title="RAG System",
     page_icon="🦜",
