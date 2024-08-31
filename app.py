@@ -52,6 +52,7 @@ def configure_rag_chain(loader):
     keyword_retriever.k = 5
     ensemble_retriever = EnsembleRetriever(retrievers=[similarity_retriever, keyword_retriever], 
                                            weights=[0.5, 0.5])
+    
     compressor = CohereRerank()
     compression_retriever = ContextualCompressionRetriever(
     base_compressor=compressor, base_retriever=ensemble_retriever)
