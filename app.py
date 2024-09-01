@@ -45,7 +45,7 @@ with st.sidebar:
     os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
     
     # Select file format
-    selected_format = st.selectbox(label="Select file format", options=["...", "pdf", "csv"])
+    selected_format = st.selectbox(label="Select file format", options=["...", "pdf", "csv", "txt"])
     
     # Upload a CSV or PDF file
     uploaded_file = st.file_uploader("Upload a file", type=[selected_format])
@@ -173,6 +173,22 @@ if OPENAI_API_KEY:
                         },
                     )["answer"]
             st.write_stream(stream_data)
+    
+    elif uploaded_file is not None and uploaded_file.type == "text/plain":
+        data = uploaded_file.read().decode("utf-8")
+        conversational_rag_chain = configure_rag_chain(data)
+        question = st.text_input("Ask any question about the uploaded file!")
+        answer = st.button("Answer!")
+        
+        if answer:
+            response = conversational_rag_chain.invoke(
+                {"input": question},
+                    config={
+                        "configurable": {"session_id": "session1"}
+                        },
+                    )["answer"]
+            st.write_stream(stream_data)
+        
         
     else:
             st.error("Please select a correct file format!")
