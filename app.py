@@ -3,7 +3,6 @@ import os
 import pandas as pd
 import time
 
-from utilities import get_apikey
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_community.vectorstores import FAISS
@@ -27,15 +26,29 @@ st.set_page_config(
     page_title="RAG System",
     page_icon="🦜",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",
     )
- 
+
 # Set API key for Cohere
 COHERE_API_KEY = os.environ["COHERE_API_KEY"]
 
-# Set API key for OpenAI 
-OPENAI_API_KEY = get_apikey()
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+with st.sidebar:
+    
+    # Set a header for the sidebar
+    st.header("Configuration!")
+    
+    # Set API key for OpenAI 
+    OPENAI_API_KEY = st.text_input(":blue[Enter Your OPENAI API Key:]",
+                                   placeholder="Paste your OpenAI API key here (sk-...)",
+                                   type="password",
+                                   )
+    os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+    
+    # Select file format
+    selected_format = st.selectbox(label="Select file format", options=["...", "pdf", "csv"])
+    
+    # Upload a CSV or PDF file
+    uploaded_file = st.file_uploader("Upload a file", type=[selected_format])
 
 
 # Function to configure the retrieval and the RAG chain with chat history
@@ -120,13 +133,9 @@ if OPENAI_API_KEY:
     
     # Set OpenAI LLM and embeddings
     llm = ChatOpenAI(model="gpt-4o-mini",temperature=0, openai_api_key=OPENAI_API_KEY)
-    
-    # Set the configuration for streamlit UI
-    st.title("Q&A RAG System!🤖")
-    selected_format = st.selectbox(label="Select file format", options=["...", "pdf", "csv"])
         
-    # Upload a CSV or PDF file
-    uploaded_file = st.file_uploader("Upload a file!")
+    # Set the configuration for streamlit UI
+    st.title("Welcome to AssistantGPT!🤖")
         
     if uploaded_file is not None and uploaded_file.type == f"application/{selected_format}":
                 
@@ -135,7 +144,7 @@ if OPENAI_API_KEY:
         for page in pdf_reader.pages:
             data += page.extract_text()        
         conversational_rag_chain = configure_rag_chain(data)
-        question = st.text_input("Ask any question!")
+        question = st.text_input("Ask any question about the uploaded file!")
         answer = st.button("Answer!")
         
         if answer:
@@ -153,7 +162,7 @@ if OPENAI_API_KEY:
         df = pd.read_csv(uploaded_file)
         df_string = df.to_string()
         conversational_rag_chain = configure_rag_chain(df_string)
-        question = st.text_input("Ask any question!")
+        question = st.text_input("Ask any question about the uploaded file!")
         answer = st.button("Answer!")
         
         if answer:
@@ -164,7 +173,7 @@ if OPENAI_API_KEY:
                         },
                     )["answer"]
             st.write_stream(stream_data)
-    
+        
     else:
             st.error("Please select a correct file format!")
         
