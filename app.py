@@ -175,6 +175,7 @@ if OPENAI_API_KEY:
             st.write_stream(stream_data)
     
     elif uploaded_file is not None and uploaded_file.type == "text/plain":
+        
         data = uploaded_file.read().decode("utf-8")
         conversational_rag_chain = configure_rag_chain(data)
         question = st.text_input("Ask any question about the uploaded file!")
