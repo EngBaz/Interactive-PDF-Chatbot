@@ -111,8 +111,11 @@ def process_file_and_answer(uploaded_file, file_format, llm, session_id="session
             data = df.to_string()
         elif file_format == "txt":
             data = uploaded_file.read().decode("utf-8")
+        elif file_format == "py":
+            data = uploaded_file.read().decode("utf-8")
         else:
             raise ValueError("Unsupported file format selected.")
+        
         
         # Configure the RAG chain
         conversational_rag_chain = configure_rag_chain(data, llm)

@@ -32,7 +32,7 @@ def main():
         os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
         
         # Select file format
-        selected_format = st.selectbox(label="Select file format", options=["...", "pdf", "csv", "txt"])
+        selected_format = st.selectbox(label="Select file format", options=["...", "pdf", "csv", "txt", "py"])
         
         # Upload a file
         uploaded_file = st.file_uploader("Upload a file", type=[selected_format])
@@ -43,7 +43,7 @@ def main():
         llm = ChatOpenAI(model="gpt-4o-mini", temperature=0, openai_api_key=OPENAI_API_KEY)
             
         # Set the configuration for streamlit UI
-        st.title("Welcome to AssistantGPT!🤖")
+        st.title("Welcome to ExtractGPT!🤖")
             
         if uploaded_file is not None:
             process_file_and_answer(uploaded_file, selected_format, llm)
