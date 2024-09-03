@@ -75,7 +75,7 @@ def configure_rag_chain(loader, llm):
     store = {}
     
     
-    # Function to store the history with a session id
+    # Function to store the history of the chat with a session id
     def get_session_history(session_id: str) -> BaseChatMessageHistory:
         if session_id not in store:
             store[session_id] = ChatMessageHistory()
@@ -92,7 +92,7 @@ def configure_rag_chain(loader, llm):
     return conversational_rag_chain
 
 
-# Function to stream the output
+# Function to stream the response
 def stream_data(response):
     for word in response.split(" "):
         yield word + " "
@@ -115,7 +115,6 @@ def process_file_and_answer(uploaded_file, file_format, llm, session_id="session
             data = uploaded_file.read().decode("utf-8")
         else:
             raise ValueError("Unsupported file format selected.")
-        
         
         # Configure the RAG chain
         conversational_rag_chain = configure_rag_chain(data, llm)
