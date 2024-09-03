@@ -74,8 +74,6 @@ def configure_rag_chain(loader, llm):
 
     store = {}
     
-    
-    # Function to store the history of the chat with a session id
     def get_session_history(session_id: str) -> BaseChatMessageHistory:
         if session_id not in store:
             store[session_id] = ChatMessageHistory()
