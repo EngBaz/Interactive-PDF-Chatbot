@@ -38,7 +38,6 @@ def configure_hybrid_search(data):
     keyword_retriever = BM25Retriever.from_documents(docs)
     keyword_retriever.k = 5
     ensemble_retriever = EnsembleRetriever(retrievers=[similarity_retriever, keyword_retriever], 
-     
                                            weights=[0.5, 0.5])
     compressor = CohereRerank()
     compression_retriever = ContextualCompressionRetriever(
