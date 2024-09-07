@@ -13,7 +13,7 @@ def main():
     
     # Set up the page of the Streamlit UI 
     st.set_page_config(
-        page_title="RAG System",
+        page_title="Hybrid RAG",
         page_icon="🦜",
         layout="wide",
         initial_sidebar_state="expanded",
@@ -43,7 +43,7 @@ def main():
         llm = ChatOpenAI(model="gpt-4o-mini", temperature=0, openai_api_key=OPENAI_API_KEY)
             
         # Set the configuration for streamlit UI
-        st.title("Welcome to ExtractGPT!🤖")
+        st.title("HybridGPT!🤖")
             
         if uploaded_file is not None:
             process_file_and_answer(uploaded_file, selected_format, llm)
