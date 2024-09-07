@@ -10,7 +10,7 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_experimental.text_splitter import SemanticChunker 
 from langchain.retrievers import ContextualCompressionRetriever, EnsembleRetriever
 from langchain_community.retrievers import BM25Retriever
@@ -19,24 +19,48 @@ from langchain.retrievers.document_compressors import CohereRerank
 
 
 # Function to configure the retrieval with chat history
-def configure_rag_chain(loader, llm):
+def configure_hybrid_search(data):
+    """
+    Configures a hybrid search mechanism that combines semantic and keyword-based retrieval,
+    followed by reranking for optimized search results.
     
-    # Semantic chunking
+    Args:
+        data: The input data that will be chunked and used for retrieval.
+
+    Returns:
+        compression_retriever: A retrieval system that combines hybrid search and reranking for improved search performance.
+    """
     semantic_chunker = SemanticChunker(OpenAIEmbeddings(), breakpoint_threshold_type="percentile")
-    docs = semantic_chunker.create_documents([loader])
+    docs = semantic_chunker.create_documents([data])
     vectorstore = FAISS.from_documents(docs, OpenAIEmbeddings())
     
-    # Hybrid search 
     similarity_retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
     keyword_retriever = BM25Retriever.from_documents(docs)
     keyword_retriever.k = 5
     ensemble_retriever = EnsembleRetriever(retrievers=[similarity_retriever, keyword_retriever], 
      
                                            weights=[0.5, 0.5])
-    #Cohere AI Reranking
     compressor = CohereRerank()
     compression_retriever = ContextualCompressionRetriever(
     base_compressor=compressor, base_retriever=ensemble_retriever)
+    
+    return compression_retriever
+
+
+
+def configure_rag_chain(retriever, llm):
+    """
+    Configures a Retrieval-Augmented Generation (RAG) chain that uses a retriever and a large language model
+    to handle conversational question answering with session-specific history.
+
+    Args:
+        retriever: The document retriever responsible for fetching relevant context from a knowledge base.
+        llm: The large language model used to generate answers to the user's questions.
+
+    Returns:
+        conversational_rag_chain: A RAG chain that handles input messages, retrieves relevant context,
+        manages chat history, and generates responses based on both the retrieved context and prior conversations.
+    """
     
     contextualize_system_prompt = """Given a chat history and the latest user question \
         which might reference context in the chat history, formulate a standalone question \
@@ -52,7 +76,7 @@ def configure_rag_chain(loader, llm):
         )
         
     history_aware_retriever = create_history_aware_retriever(
-        llm, compression_retriever, contextualize_prompt
+        llm, retriever, contextualize_prompt
         )
 
     qa_system_prompt = """You are an assistant for question-answering tasks. \
@@ -90,15 +114,26 @@ def configure_rag_chain(loader, llm):
     return conversational_rag_chain
 
 
-# Function to stream the response
+
 def stream_data(response):
+    
     for word in response.split(" "):
         yield word + " "
         time.sleep(0.02)
 
 
-# Function to the data and provide a response
+
 def process_file_and_answer(uploaded_file, file_format, llm, session_id="session1"):
+    """
+    Processes an uploaded file based on its format and sets up a Retrieval-Augmented Generation (RAG) chain 
+    to answer questions related to the file.
+    
+    Args:
+        uploaded_file: The file uploaded by the user.
+        file_format: The format of the uploaded file (e.g., "pdf", "csv", "txt", or "py").
+        llm: The large language model used for question-answering.
+        session_id: The session identifier for managing chat history. Defaults to "session1".
+    """
     try:
         # Process the file based on the selected format
         if file_format == "pdf":
@@ -115,7 +150,8 @@ def process_file_and_answer(uploaded_file, file_format, llm, session_id="session
             raise ValueError("Unsupported file format selected.")
         
         # Configure the RAG chain
-        conversational_rag_chain = configure_rag_chain(data, llm)
+        retriever = configure_hybrid_search(data)
+        conversational_rag_chain = configure_rag_chain(retriever, llm)
         
         # Ask the user for a question and get the answer
         question = st.text_input("Ask any question about the uploaded file!")
