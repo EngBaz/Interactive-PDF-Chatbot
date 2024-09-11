@@ -11,7 +11,7 @@ COHERE_API_KEY = os.environ["COHERE_API_KEY"]
 
 def main():
     
-    # Set up the page of the Streamlit UI 
+    # Set up the page configuration of the Streamlit UI 
     st.set_page_config(
         page_title="Hybrid RAG",
         page_icon="🦜",
@@ -39,10 +39,10 @@ def main():
     
     if OPENAI_API_KEY:
         
-        # Set OpenAI LLM and embeddings
+        # Set OpenAI LLM
         llm = ChatOpenAI(model="gpt-4o-mini", temperature=0, openai_api_key=OPENAI_API_KEY)
             
-        # Set the configuration for streamlit UI
+        # Set the title of the pages
         st.title("HybridGPT!🤖")
             
         if uploaded_file is not None:
