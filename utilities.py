@@ -122,7 +122,7 @@ def stream_data(response):
 
 
 
-def process_file_and_answer(uploaded_file, file_format, llm, session_id="session1"):
+def process_file_and_answer(uploaded_file, file_format, llm):
     """
     Processes an uploaded file based on its format and sets up a Retrieval-Augmented Generation (RAG) chain 
     to answer questions related to the file.
@@ -158,7 +158,7 @@ def process_file_and_answer(uploaded_file, file_format, llm, session_id="session
             with st.spinner("Processing..."):
                 response = conversational_rag_chain.invoke(
                     {"input": question},
-                    config={"configurable": {"session_id": session_id}},
+                    config={"configurable": {"session_id": "session1"}},
                 )["answer"]
                 st.write_stream(stream_data(response))
     except Exception as e:
