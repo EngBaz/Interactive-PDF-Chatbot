@@ -134,7 +134,6 @@ def process_file_and_answer(uploaded_file, file_format, llm):
         session_id: The session identifier for managing chat history. Defaults to "session1".
     """
     try:
-        # Process the file based on the selected format
         if file_format == "pdf":
             pdf_reader = PdfReader(uploaded_file)
             data = "".join(page.extract_text() for page in pdf_reader.pages)
@@ -148,11 +147,9 @@ def process_file_and_answer(uploaded_file, file_format, llm):
         else:
             raise ValueError("Unsupported file format selected.")
         
-        # Configure the RAG chain
         retriever = configure_hybrid_search(data)
         conversational_rag_chain = configure_rag_chain(retriever, llm)
         
-        # Ask the user for a question and get the answer
         question = st.text_input("Ask any question about the uploaded file!")
         if st.button("Answer!"):
             with st.spinner("Processing..."):
