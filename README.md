@@ -67,4 +67,6 @@ To further improve retrieval quality, a reranking model from Cohere AI is applie
 
 [2] https://python.langchain.com/v0.2/docs/introduction/
 
+[3] https://python.langchain.com/v0.1/docs/use_cases/question_answering/chat_history/
+
    
