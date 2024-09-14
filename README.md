@@ -11,7 +11,7 @@ The assistant can handle conversational context and assist in answering question
 - [Implementation](#Implementation)
 
 ## Introduction
-The project showcases the implementation of a custom chat agent that leverages Langchain, an open-source framework, to interact with users in a conversational manner. The agent answers questions related to a specific uploaded document. This agent is powered by GPT-4 for natural language understanding and generation.
+The project showcases the implementation of a custom question-answering RAG system that leverages LangChain, an open-source framework, to interact with users in a conversational manner. The assistant answers questions related to a specific uploaded document and uses GPT-4 for natural language understanding and generation.
 
 ## Setup
 
