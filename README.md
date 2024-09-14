@@ -47,23 +47,9 @@ To use the conversational agent:
 
 ## Implementation
 
-This section provides a brief summary of the techniques used to develop this project.
+A <code>hybrid search</code> system was developed that uses <code>FAISS (Facebook AI Similarity Search)</code> as a vector database. This approach combines traditional <code>keyword-based</code> search with <code>vector-based</code> search that captures contextual meaning. By merging these methods, the system can deliver more accurate and relevant results. LangChain's <code>EnsembleRetriever</code> tool is used to effectively integrate these two search techniques.
 
-#### 1. Semantic Chunking
-
-<code>Semantic chunking</code> is employed in building RAG systems to enhance retrieval accuracy. Unlike <code>text chunking</code>, which simply divides documents based on separators, semantic chunking considers the relationships within the text, segmenting it into meaningful and semantically identical chunks.
-
-#### 2. Hybrid Search
-
-A <code>hybrid search</code> system is developed with <code>FAISS</code> (Facebook AI similarity search) as a vector database. This method merges <code>keyword search</code> with the contextual insights of <code>vector search</code> to deliver more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search approaches.
-
-#### 3. Cohere Rerank model
-
-To further improve retrieval quality, a reranking model from Cohere AI is applied after the hybrid search to reorder the most relevant documents based on a relevance score.
-
-#### 4. Chat Memory
-
-In many Q&A applications, it's important to enable a back-and-forth conversation, which requires the system to have "memory" of previous interactions and incorporate that context into its responses. To handle follow-up questions, it's essential to include a sub-chain that reformulates the latest user query in the context of prior conversations. This ensures that questions referencing earlier messages, such as "Can you elaborate on the second point?", are fully understood before retrieval is performed, since such questions would be unclear without past context.
+FAISS (Facebook AI Similarity Search): FAISS is an efficient library designed to search for similar elements in a large collection of vectors. It is characterized by optimized indexing and search algorithms when processing large data sets. In this context, FAISS stores vector embeddings, i.e. mathematical representations of data that capture the semantic meaning and relationships between them.
 
 ## References
 
