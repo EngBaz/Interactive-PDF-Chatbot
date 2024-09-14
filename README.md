@@ -69,8 +69,13 @@ In many Q&A applications, it's important to enable a back-and-forth conversation
 
 [1] https://arxiv.org/pdf/2408.05141
 
-[2] https://python.langchain.com/v0.2/docs/introduction/
+[2] https://arxiv.org/abs/2409.07691
 
-[3] https://python.langchain.com/v0.1/docs/use_cases/question_answering/chat_history/
+[3] https://python.langchain.com/v0.2/docs/introduction/
 
+[4] https://python.langchain.com/v0.1/docs/use_cases/question_answering/chat_history/
+
+[5] https://github.com/ShoaibMajidDar/PDF-chat-bot/blob/main/app.py
+
+[6] https://github.com/hwchase17/conversational-retrieval-agent/blob/master/streamlit.py
    
