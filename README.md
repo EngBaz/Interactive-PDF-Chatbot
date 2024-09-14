@@ -51,14 +51,19 @@ This section provides a brief summary of the techniques used to develop this pro
 
 #### 1. Semantic Chunking
 
-<code>Semantic chunking</code> is employed in building RAG systems to enhance retrieval accuracy. Unlike <code>text chunking</code>, which simply divides documents based on separators, semantic chunking considers the relationships within the text, segmenting it into meaningful and semantically complete chunks. While this approach yields more precise retrieval results compared to basic text splitting, it is slower in performance.
+<code>Semantic chunking</code> is employed in building RAG systems to enhance retrieval accuracy. Unlike <code>text chunking</code>, which simply divides documents based on separators, semantic chunking considers the relationships within the text, segmenting it into meaningful and semantically identical chunks.
 
 #### 2. Hybrid Search with Cohere Rerank Model
 
-A <code>hybrid search</code> system is developed with <code>FAISS</code> (Facebook AI similarity search) as a vector database. This method merges <code>keyword search</code> with the contextual insights of <code>semantic search</code> to deliver more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search approaches. To further improve retrieval quality, a reranking model from Cohere AI is applied after the hybrid search to reorder the most relevant documents.
+A <code>hybrid search</code> system is developed with <code>FAISS</code> (Facebook AI similarity search) as a vector database. This method merges <code>keyword search</code> with the contextual insights of <code>semantic search</code> to deliver more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search approaches.
+
+#### 3. Cohere Rerank model
+
+To further improve retrieval quality, a reranking model from Cohere AI is applied after the hybrid search to reorder the most relevant documents based on a relevance score.
 
 ## References
 
 [1] https://arxiv.org/pdf/2408.05141
+[2] https://python.langchain.com/v0.2/docs/introduction/
 
    
