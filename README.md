@@ -49,7 +49,13 @@ To use the conversational agent:
 
 A <code>hybrid search</code> system was developed that uses <code>FAISS (Facebook AI Similarity Search)</code> as a vector database. This approach combines traditional <code>keyword-based</code> search with <code>vector-based</code> search that captures contextual meaning. By merging these methods, the system can deliver more accurate and relevant results. LangChain's <code>EnsembleRetriever</code> tool is used to effectively integrate these two search techniques.
 
-FAISS (Facebook AI Similarity Search): FAISS is an efficient library designed to search for similar elements in a large collection of vectors. It is characterized by optimized indexing and search algorithms when processing large data sets. In this context, FAISS stores vector embeddings, i.e. mathematical representations of data that capture the semantic meaning and relationships between them.
+1. <code>FAISS (Facebook AI Similarity Search):</code> FAISS is an efficient library designed to search for similar elements in a large collection of vectors. It is characterized by optimized indexing and search algorithms when processing large data sets. In this context, FAISS stores vector embeddings, i.e. mathematical representations of data that capture the semantic meaning and relationships between them.
+   
+2. <code>Keyword search</code>: Conventional search methods focus on finding exact keywords or phrases to retrieve results. This method is very effective for structured or specific queries, but can miss the broader context and meaning behind the words, especially if the phrases or synonyms are different.
+
+3. <code>Vector search</code>: Unlike keyword search, vector search is based on embeddings that represent words, phrases or entire documents as vectors in a multidimensional space. By capturing the semantic relationships between the data, vector search finds results based on contextual similarity, even if the exact keywords are not used.
+
+4. <code>Hybrid search</code>: This system combines both approaches — keyword search provides precision when exact terms match, while vector search adds context by retrieving results based on meaning and semantics. The hybrid approach aims to improve relevance and handle different types of search queries more robustly.
 
 ## References
 
