@@ -61,38 +61,42 @@ def configure_rag_chain(retriever, llm):
         manages chat history, and generates responses based on both the retrieved context and prior conversations.
     """
     
-    contextualize_system_prompt = """Given a chat history and the latest user question \
+    contextualize_system_prompt ="""Given a chat history and the latest user question \
         which might reference context in the chat history, formulate a standalone question \
         which can be understood without the chat history. Do NOT answer the question, \
-        just reformulate it if needed and otherwise return it as is."""
+        just reformulate it if needed and otherwise return it as is.
+    """
 
     contextualize_prompt = ChatPromptTemplate.from_messages(
         [
             ("system", contextualize_system_prompt),
             MessagesPlaceholder("chat_history"),
             ("human", "{input}"),
-            ]
-        )
+        ]
+    )
         
     history_aware_retriever = create_history_aware_retriever(
-        llm, retriever, contextualize_prompt
-        )
+        llm, retriever, 
+        contextualize_prompt,
+    )
 
     qa_system_prompt = """You are an assistant for question-answering tasks. \
     Use the following pieces of retrieved context to answer the question. \
     If you don't know the answer, just say that you don't know. \
     Keep the answer concise and clear.\
-    {context}"""
+    {context}
+    """
         
     qa_prompt = ChatPromptTemplate.from_messages(
         [
             ("system", qa_system_prompt),
             MessagesPlaceholder("chat_history"),
             ("human", "{input}"),
-            ]
-        )
+        ]
+    )
 
     question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)
+    
     rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)
 
     store = {}
@@ -100,7 +104,7 @@ def configure_rag_chain(retriever, llm):
     def get_session_history(session_id: str) -> BaseChatMessageHistory:
         if session_id not in store:
             store[session_id] = ChatMessageHistory()
-            return store[session_id]
+        return store[session_id]
 
     conversational_rag_chain = RunnableWithMessageHistory(
         rag_chain,
@@ -131,7 +135,6 @@ def process_file_and_answer(uploaded_file, file_format, llm):
         uploaded_file: The file uploaded by the user.
         file_format: The format of the uploaded file (e.g., "pdf", "csv", "txt", or "py").
         llm: The large language model used for question-answering.
-        session_id: The session identifier for managing chat history. Defaults to "session1".
     """
     try:
         if file_format == "pdf":
