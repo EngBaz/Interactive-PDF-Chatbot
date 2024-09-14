@@ -55,7 +55,7 @@ This section provides a brief summary of the techniques used to develop this pro
 
 #### 2. Hybrid Search
 
-A <code>hybrid search</code> system is developed with <code>FAISS</code> (Facebook AI similarity search) as a vector database. This method merges <code>keyword search</code> with the contextual insights of <code>semantic search</code> to deliver more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search approaches.
+A <code>hybrid search</code> system is developed with <code>FAISS</code> (Facebook AI similarity search) as a vector database. This method merges <code>keyword search</code> with the contextual insights of <code>vector search</code> to deliver more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search approaches.
 
 #### 3. Cohere Rerank model
 
