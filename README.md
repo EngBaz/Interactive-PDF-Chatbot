@@ -1,7 +1,7 @@
-# RAG System with Langchain, FAISS and OpenAI GPT-4
+# Hybrid RAG with LangChain, FAISS and OpenAI GPT-4
 
-This end-to-end project presents an example of a Q&A conversational agent using Langchain ecosystem, OpenAI GPT-4, FAISS vectorstore for RAG, and Streamlit.
-The agent can handle conversational context and assist in answering questions related to an uploaded document.
+This project presents an example of a Q&A assistant using LangChain, OpenAI GPT-4, FAISS vectorstore, and Streamlit.
+The assistant can handle conversational context and assist in answering questions related to an uploaded document.
 
 ## Table of Contents
 
@@ -11,7 +11,7 @@ The agent can handle conversational context and assist in answering questions re
 - [Implementation](#Implementation)
 
 ## Introduction
-The project showcases the implementation of a custom chat agent that leverages Langchain, an open-source framework, to interact with users in a conversational manner. The agent answers questions related to a specific uploaded document. This agent is powered by GPT-4 for natural language understanding and generation.
+The project showcases the implementation of a custom question-answering RAG system that leverages LangChain, an open-source framework, to interact with users in a conversational manner. The assistant answers questions related to a specific uploaded document and uses GPT-4 for natural language understanding and generation.
 
 ## Setup
 
@@ -51,14 +51,26 @@ This section provides a brief summary of the techniques used to develop this pro
 
 #### 1. Semantic Chunking
 
-<code>Semantic chunking</code> is employed in building RAG systems to enhance retrieval accuracy. Unlike <code>text chunking</code>, which simply divides documents based on separators, semantic chunking considers the relationships within the text, segmenting it into meaningful and semantically complete chunks. While this approach yields more precise retrieval results compared to basic text splitting, it is slower in performance.
+<code>Semantic chunking</code> is employed in building RAG systems to enhance retrieval accuracy. Unlike <code>text chunking</code>, which simply divides documents based on separators, semantic chunking considers the relationships within the text, segmenting it into meaningful and semantically identical chunks.
 
-#### 2. Hybrid Search with Cohere Rerank Model
+#### 2. Hybrid Search
 
-A <code>hybrid search</code> system is developed with <code>FAISS</code> (Facebook AI similarity search) as a vector database. This method merges <code>keyword search</code> with the contextual insights of <code>semantic search</code> to deliver more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search approaches. To further improve retrieval quality, a reranking model from Cohere AI is applied after the hybrid search to reorder the most relevant documents.
+A <code>hybrid search</code> system is developed with <code>FAISS</code> (Facebook AI similarity search) as a vector database. This method merges <code>keyword search</code> with the contextual insights of <code>semantic search</code> to deliver more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search approaches.
+
+#### 3. Cohere Rerank model
+
+To further improve retrieval quality, a reranking model from Cohere AI is applied after the hybrid search to reorder the most relevant documents based on a relevance score.
+
+#### 4. Chat Memory
+
+In many Q&A applications, it's important to enable a back-and-forth conversation, which requires the system to have "memory" of previous interactions and incorporate that context into its responses. To handle follow-up questions, it's essential to include a sub-chain that reformulates the latest user query in the context of prior conversations. This ensures that questions referencing earlier messages, such as "Can you elaborate on the second point?", are fully understood before retrieval is performed, since such questions would be unclear without past context.
 
 ## References
 
 [1] https://arxiv.org/pdf/2408.05141
+
+[2] https://python.langchain.com/v0.2/docs/introduction/
+
+[3] https://python.langchain.com/v0.1/docs/use_cases/question_answering/chat_history/
 
    
