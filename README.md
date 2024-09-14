@@ -63,7 +63,7 @@ To further improve retrieval quality, a reranking model from Cohere AI is applie
 
 #### 4. Chat Memory
 
-In many Q&A applications, it's important to enable a back-and-forth conversation, which requires the system to have "memory" of previous interactions and incorporate that context into its responses. To handle follow-up questions, it's essential to include a sub-process that reformulates the latest user query in the context of prior conversations. This ensures that questions referencing earlier messages, such as "Can you elaborate on the second point?", are fully understood before retrieval is performed, since such questions would be unclear without past context.
+In many Q&A applications, it's important to enable a back-and-forth conversation, which requires the system to have "memory" of previous interactions and incorporate that context into its responses. To handle follow-up questions, it's essential to include a sub-chain that reformulates the latest user query in the context of prior conversations. This ensures that questions referencing earlier messages, such as "Can you elaborate on the second point?", are fully understood before retrieval is performed, since such questions would be unclear without past context.
 
 ## References
 
