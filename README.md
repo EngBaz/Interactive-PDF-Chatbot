@@ -71,6 +71,4 @@ A <code>hybrid search</code> system was developed that uses <code>FAISS (Faceboo
 [4] https://python.langchain.com/v0.1/docs/use_cases/question_answering/chat_history/
 
 [5] https://github.com/ShoaibMajidDar/PDF-chat-bot/blob/main/app.py
-
-[6] https://github.com/hwchase17/conversational-retrieval-agent/blob/master/streamlit.py
    
