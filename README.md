@@ -16,7 +16,7 @@ The project showcases the implementation of a custom question-answering RAG syst
 ## Setup
 
 To setup this project on your local machine, follow the below steps:
-1. Clone this repository: <code>git clone github.com/EngBaz/conversational-retrieval-agent.git</code>
+1. Clone this repository: <code>git clone github.com/EngBaz/Hybrid-RAG-System</code>
     
 2. Install the required dependencies by running <code>pip install -r requirements.txt</code>
 
