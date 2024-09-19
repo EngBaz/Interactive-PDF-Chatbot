@@ -16,15 +16,14 @@ The project showcases the implementation of a custom question-answering RAG syst
 ## Setup
 
 To setup this project on your local machine, follow the below steps:
-1. Clone this repository: <code>git clone github.com/EngBaz/conversational-retrieval-agent.git</code>
-    
-2. Install the required dependencies by running <code>pip install -r requirements.txt</code>
+1. Clone this repository: <code>git clone github.com/EngBaz/Hybrid-RAG-System</code>
 
-3. Create a virtual enviromnent
+2. Create a virtual enviromnent
    ```console
     $ python -m venv .venv
     $ .venv\Scripts\activate.bat
     ```
+3. Install the required dependencies by running <code>pip install -r requirements.txt</code>
 
 4. Obtain an API key from OpenAI and Cohere AI. Store the Cohere API key in a <code>.env</code> file with the corresponsding name <code>COHERE_API_KEY</code>.
     
@@ -47,30 +46,29 @@ To use the conversational agent:
 
 ## Implementation
 
-This section provides a brief summary of the techniques used to develop this project.
+A <code>hybrid search</code> system was developed that uses <code>FAISS (Facebook AI Similarity Search)</code> as a vector database. This approach combines traditional <code>keyword-based</code> search with <code>vector-based</code> search that captures contextual meaning. By merging these methods, the system can deliver more accurate and relevant results. LangChain's <code>EnsembleRetriever</code> tool is used to effectively integrate these two search techniques. A <code>Cohere Rerank</code> model is used after the hybrid search to further improve the ranking of search results.
 
-#### 1. Semantic Chunking
+1. <code>FAISS (Facebook AI Similarity Search):</code> FAISS is an efficient library designed to search for similar elements in a large collection of vectors. It is characterized by optimized indexing and search algorithms when processing large data sets. In this context, FAISS stores vector embeddings, i.e. mathematical representations of data that capture the semantic meaning and relationships between them.
+   
+2. <code>Keyword search:</code> Conventional search methods focus on finding exact keywords or phrases to retrieve results. This method is very effective for structured or specific queries, but can miss the broader context and meaning behind the words, especially if the phrases or synonyms are different.
 
-<code>Semantic chunking</code> is employed in building RAG systems to enhance retrieval accuracy. Unlike <code>text chunking</code>, which simply divides documents based on separators, semantic chunking considers the relationships within the text, segmenting it into meaningful and semantically identical chunks.
+3. <code>Vector search:</code> Unlike keyword search, vector search is based on embeddings that represent words, phrases or entire documents as vectors in a multidimensional space. By capturing the semantic relationships between the data, vector search finds results based on contextual similarity, even if the exact keywords are not used.
 
-#### 2. Hybrid Search
+4. <code>Hybrid search:</code> This system combines both approaches — keyword search provides precision when exact terms match, while vector search adds context by retrieving results based on meaning and semantics. The hybrid approach aims to improve relevance and handle different types of search queries more robustly.
 
-A <code>hybrid search</code> system is developed with <code>FAISS</code> (Facebook AI similarity search) as a vector database. This method merges <code>keyword search</code> with the contextual insights of <code>semantic search</code> to deliver more accurate and relevant results. The Langchain <code>EnsembleRetriever</code> tool integrates these two search approaches.
+5. <code>LangChain’s EnsembleRetriever:</code> The EnsembleRetriever is a special tool within LangChain that enables the combination of several search mechanisms (e.g. keyword and vector search). It intelligently combines the strengths of both methods and ensures that the search results are more comprehensive and contextualized.
 
-#### 3. Cohere Rerank model
-
-To further improve retrieval quality, a reranking model from Cohere AI is applied after the hybrid search to reorder the most relevant documents based on a relevance score.
-
-#### 4. Chat Memory
-
-In many Q&A applications, it's important to enable a back-and-forth conversation, which requires the system to have "memory" of previous interactions and incorporate that context into its responses. To handle follow-up questions, it's essential to include a sub-chain that reformulates the latest user query in the context of prior conversations. This ensures that questions referencing earlier messages, such as "Can you elaborate on the second point?", are fully understood before retrieval is performed, since such questions would be unclear without past context.
+6. <code>Cohere Rerank Model:</code> The Cohere Rerank Model is a machine learning-based tool that further improves the ranking of search results. After the hybrid search system has retrieved the initial results (from both keyword and vector searches), the Cohere model is applied to re-rank these results based on relevance. By analyzing the semantic relationship between the search query and the search results, it assigns a higher score to those that best match the intent of the search query. This final reordering ensures that the most contextually appropriate and useful information is prioritized, improving the overall quality of results.
 
 ## References
 
 [1] https://arxiv.org/pdf/2408.05141
 
-[2] https://python.langchain.com/v0.2/docs/introduction/
+[2] https://arxiv.org/abs/2409.07691
 
-[3] https://python.langchain.com/v0.1/docs/use_cases/question_answering/chat_history/
+[3] https://python.langchain.com/v0.2/docs/introduction/
 
+[4] https://python.langchain.com/v0.1/docs/use_cases/question_answering/chat_history/
+
+[5] https://github.com/ShoaibMajidDar/PDF-chat-bot/blob/main/app.py
    
