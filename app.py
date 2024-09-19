@@ -12,7 +12,7 @@ COHERE_API_KEY = os.environ["COHERE_API_KEY"]
 def main():
     
     st.set_page_config(
-        page_title="Hybrid RAG",
+        page_title="RAG Assistant",
         page_icon="🦜",
         layout="wide",
         initial_sidebar_state="expanded",
@@ -28,18 +28,23 @@ def main():
                                     )
         os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
         
-        selected_format = st.selectbox(label="Select file format", options=["...", "pdf", "csv", "txt", "py"])
+        max_new_tokens = st.number_input("Select a max token value:", min_value=1, max_value=8000, value=1000)
+        
+        temperature = st.number_input("Select a temperature value:", min_value=0.0, max_value=1.0, value=0.00)
+    
+        selected_format = st.selectbox(label="Select file format:", options=["...", "pdf", "csv", "txt", "py"])
 
-        uploaded_file = st.file_uploader("Upload a file", type=[selected_format])
+        uploaded_file = st.file_uploader("Upload a file:", type=[selected_format])
     
     if OPENAI_API_KEY:
         
-        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0, openai_api_key=OPENAI_API_KEY)
+        llm = ChatOpenAI(model="gpt-4o-mini", temperature=temperature, openai_api_key=OPENAI_API_KEY, max_tokens=max_new_tokens)
             
-        st.title("HybridGPT!🤖")
+        st.title("InfoExtractor!🤖")
             
         if uploaded_file is not None:
             process_file_and_answer(uploaded_file, selected_format, llm)
+            
         else:
             st.warning("Please upload a file to continue.")
         

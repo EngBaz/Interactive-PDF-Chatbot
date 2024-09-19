@@ -14,8 +14,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_experimental.text_splitter import SemanticChunker 
 from langchain.retrievers import ContextualCompressionRetriever, EnsembleRetriever
 from langchain_community.retrievers import BM25Retriever
-from langchain.retrievers.document_compressors import CohereRerank
-
+from langchain_cohere import CohereRerank
 
 
 # Function to configure the retrieval with chat history
@@ -39,7 +38,7 @@ def configure_hybrid_search(data):
     keyword_retriever.k = 5
     ensemble_retriever = EnsembleRetriever(retrievers=[similarity_retriever, keyword_retriever], 
                                            weights=[0.5, 0.5])
-    compressor = CohereRerank()
+    compressor = CohereRerank(model="rerank-english-v3.0")
     compression_retriever = ContextualCompressionRetriever(
     base_compressor=compressor, base_retriever=ensemble_retriever)
     
@@ -76,7 +75,8 @@ def configure_rag_chain(retriever, llm):
     )
         
     history_aware_retriever = create_history_aware_retriever(
-        llm, retriever, 
+        llm, 
+        retriever, 
         contextualize_prompt,
     )
 

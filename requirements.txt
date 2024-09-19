@@ -6,3 +6,4 @@ OpenAI
 rank_bm25
 cohere
 langchain_experimental
+langchain-cohere
