@@ -29,7 +29,7 @@ with st.sidebar:
         
     temperature = st.number_input("Select a temperature value:", min_value=0.0, max_value=1.0, value=0.00)
     
-    selected_format = st.selectbox(label="Select file format:", options=["...", "pdf", "csv", "txt", "py"])
+    selected_format = st.selectbox(label="Select file format:", options=["...", "pdf", "txt"])
 
     uploaded_file = st.file_uploader("Upload a file:", type=[selected_format])
     
@@ -38,10 +38,7 @@ if OPENAI_API_KEY:
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=temperature, openai_api_key=OPENAI_API_KEY, max_tokens=max_new_tokens)
             
     st.title("RAG Chat Assistant🤖")
-    
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-    
+        
     if uploaded_file is not None:
         process_file_and_answer(uploaded_file, selected_format, llm)
             

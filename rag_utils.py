@@ -1,4 +1,3 @@
-import pandas as pd
 import time
 import streamlit as st
 
@@ -151,39 +150,44 @@ def process_file_and_answer(uploaded_file, file_format, llm):
         
         pdf_reader = PdfReader(uploaded_file)
         data = "".join(page.extract_text() for page in pdf_reader.pages)
-            
-    elif file_format == "csv":
-        
-        df = pd.read_csv(uploaded_file)
-        data = df.to_string()
-            
+   
     elif file_format == "txt":
         
         data = uploaded_file.read().decode("utf-8")
             
-    elif file_format == "py":
-        
-        data = uploaded_file.read().decode("utf-8")
-            
     else:
+        
         pass
 
     retriever = configure_hybrid_search(data)
+    
     conversational_rag_chain = configure_rag_chain(retriever, llm)
-        
-    messages = st.container(height=500)
-    messages.chat_message("assistant").write_stream(stream_data("Hello there👋. How can I help you today with your document?"))
-        
+    
+    # Initialize chat history
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    
+    # Display chat messages from history on app rerun
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+    
+    # Accept user input    
     if prompt := st.chat_input("Ask a question"):
-                       
-        messages.chat_message("user").write_stream(stream_data(prompt))
+        # Add user message to chat history
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        # Display user message in chat message container
+        with st.chat_message("user"):
+            st.markdown(prompt)    
+        
+        with st.chat_message("assistant"):
             
-        response = conversational_rag_chain.invoke(
-            {"input": prompt},
-            config={"configurable": {"session_id": "session1"}},
-            )["answer"]
+            response = conversational_rag_chain.invoke(
+                {"input": prompt},
+                config={"configurable": {"session_id": "session1"}},
+                )["answer"]
             
-        messages.chat_message("assistant").write_stream(stream_data(response))
-            
+            st.write_stream(stream_data(response))
+        st.session_state.messages.append({"role": "assistant", "content": response})    
 
 
