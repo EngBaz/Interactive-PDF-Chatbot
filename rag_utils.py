@@ -29,7 +29,12 @@ def configure_hybrid_search(data):
     Returns:
         compression_retriever: A retrieval system that combines hybrid search and reranking for improved search performance.
     """
-    semantic_chunker = SemanticChunker(OpenAIEmbeddings(), breakpoint_threshold_type="percentile")
+    
+    semantic_chunker = SemanticChunker(
+        OpenAIEmbeddings(), 
+        breakpoint_threshold_type="percentile",
+        )
+    
     docs = semantic_chunker.create_documents([data])
     vectorstore = FAISS.from_documents(docs, OpenAIEmbeddings())
     
@@ -37,10 +42,15 @@ def configure_hybrid_search(data):
     keyword_retriever = BM25Retriever.from_documents(docs)
     keyword_retriever.k = 5
     ensemble_retriever = EnsembleRetriever(retrievers=[similarity_retriever, keyword_retriever], 
-                                           weights=[0.5, 0.5])
+                                           weights=[0.5, 0.5],
+                                           )
+    
     compressor = CohereRerank(model="rerank-english-v3.0")
+    
     compression_retriever = ContextualCompressionRetriever(
-    base_compressor=compressor, base_retriever=ensemble_retriever)
+    base_compressor=compressor, 
+    base_retriever=ensemble_retriever,
+    )
     
     return compression_retriever
 
@@ -122,7 +132,7 @@ def stream_data(response):
     
     for word in response.split(" "):
         yield word + " "
-        time.sleep(0.02)
+        time.sleep(0.05)    
 
 
 
@@ -136,30 +146,44 @@ def process_file_and_answer(uploaded_file, file_format, llm):
         file_format: The format of the uploaded file (e.g., "pdf", "csv", "txt", or "py").
         llm: The large language model used for question-answering.
     """
-    try:
-        if file_format == "pdf":
-            pdf_reader = PdfReader(uploaded_file)
-            data = "".join(page.extract_text() for page in pdf_reader.pages)
-        elif file_format == "csv":
-            df = pd.read_csv(uploaded_file)
-            data = df.to_string()
-        elif file_format == "txt":
-            data = uploaded_file.read().decode("utf-8")
-        elif file_format == "py":
-            data = uploaded_file.read().decode("utf-8")
-        else:
-            raise ValueError("Unsupported file format selected.")
+    
+    if file_format == "pdf":
         
-        retriever = configure_hybrid_search(data)
-        conversational_rag_chain = configure_rag_chain(retriever, llm)
+        pdf_reader = PdfReader(uploaded_file)
+        data = "".join(page.extract_text() for page in pdf_reader.pages)
+            
+    elif file_format == "csv":
         
-        question = st.text_input("Ask any question about the uploaded file!")
-        if st.button("Answer!"):
-            with st.spinner("Processing..."):
-                response = conversational_rag_chain.invoke(
-                    {"input": question},
-                    config={"configurable": {"session_id": "session1"}},
-                )["answer"]
-                st.write_stream(stream_data(response))
-    except Exception as e:
-        st.error(f"An error occurred: {str(e)}")
+        df = pd.read_csv(uploaded_file)
+        data = df.to_string()
+            
+    elif file_format == "txt":
+        
+        data = uploaded_file.read().decode("utf-8")
+            
+    elif file_format == "py":
+        
+        data = uploaded_file.read().decode("utf-8")
+            
+    else:
+        pass
+
+    retriever = configure_hybrid_search(data)
+    conversational_rag_chain = configure_rag_chain(retriever, llm)
+        
+    messages = st.container(height=500)
+    messages.chat_message("assistant").write_stream(stream_data("Hello there👋. How can I help you today with your document?"))
+        
+    if prompt := st.chat_input("Ask a question"):
+                       
+        messages.chat_message("user").write_stream(stream_data(prompt))
+            
+        response = conversational_rag_chain.invoke(
+            {"input": prompt},
+            config={"configurable": {"session_id": "session1"}},
+            )["answer"]
+            
+        messages.chat_message("assistant").write_stream(stream_data(response))
+            
+
+
