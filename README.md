@@ -38,7 +38,7 @@ To setup this project on your local machine, follow the below steps:
 ## Usage
 
 To use the conversational agent:
-1. In the terminal, run the streamlit app: <code> streamlit run app.py </code>
+1. In the terminal, run the streamlit app: <code> streamlit run main.py </code>
 2. Select the appropriate format of your file 
 3. Upload your file
 4. Write a specific question about the uploaded file
