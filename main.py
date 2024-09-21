@@ -33,6 +33,9 @@ with st.sidebar:
 
     uploaded_file = st.file_uploader("Upload a file:", type=[selected_format])
     
+    if st.button("Clear Chat History"):
+        st.session_state.messages = []
+
 if OPENAI_API_KEY:
     
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=temperature, openai_api_key=OPENAI_API_KEY, max_tokens=max_new_tokens)

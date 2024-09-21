@@ -69,12 +69,23 @@ def configure_rag_chain(retriever, llm):
         manages chat history, and generates responses based on both the retrieved context and prior conversations.
     """
     
-    contextualize_system_prompt ="""Given a chat history and the latest user question \
-        which might reference context in the chat history, formulate a standalone question \
-        which can be understood without the chat history. Do NOT answer the question, \
-        just reformulate it if needed and otherwise return it as is.
-    """
+    contextualize_system_prompt ="""
+    
+    Given a chat history and a user's last question that could refer to previous context or information 
+    from the chat history, your task is to formulate a clear and stand-alone question or statement that 
+    can be understood without reference to the previous conversation.
 
+    If the user's question refers to something previously mentioned in the chat (e.g. follow-up questions, 
+    vague allusions or clarifications), you need to refer back to the chat history, understand the specific 
+    context the user is alluding to, and formulate an accurate, self-contained question or statement that 
+    conveys the full meaning. This conversion is essential because the rephrased version will be used to query 
+    a vector database for relevant information.
+
+    Your goal is to ensure that the rephrased question or statement is as precise and specific as possible, 
+    especially when it comes to follow-up questions or vague allusions, so that it retrieves the most relevant 
+    information from the database.
+    
+    """
     contextualize_prompt = ChatPromptTemplate.from_messages(
         [
             ("system", contextualize_system_prompt),
@@ -145,7 +156,12 @@ def process_file_and_answer(uploaded_file, file_format, llm):
         file_format: The format of the uploaded file (e.g., "pdf", "csv", "txt", or "py").
         llm: The large language model used for question-answering.
     """
-    
+
+    # Clear chat history when a new file is uploaded
+    if uploaded_file:
+        st.session_state.messages = []
+        
+    # Extract data depending on the format of the file
     if file_format == "pdf":
         
         pdf_reader = PdfReader(uploaded_file)
