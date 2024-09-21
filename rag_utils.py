@@ -142,7 +142,7 @@ def stream_data(response):
     
     for word in response.split(" "):
         yield word + " "
-        time.sleep(0.05)    
+        time.sleep(0.06)    
 
 
 
@@ -156,12 +156,7 @@ def process_file_and_answer(uploaded_file, file_format, llm):
         file_format: The format of the uploaded file (e.g., "pdf", "csv", "txt", or "py").
         llm: The large language model used for question-answering.
     """
-
-    # Clear chat history when a new file is uploaded
-    if uploaded_file:
-        st.session_state.messages = []
-        
-    # Extract data depending on the format of the file
+    
     if file_format == "pdf":
         
         pdf_reader = PdfReader(uploaded_file)

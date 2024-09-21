@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+
 from langchain_openai import ChatOpenAI
 from rag_utils import process_file_and_answer
 
@@ -42,7 +43,8 @@ if OPENAI_API_KEY:
             
     st.title("RAG Chat Assistant🤖")
         
-    if uploaded_file is not None:
+    if uploaded_file:
+        st.session_state.messages = []
         process_file_and_answer(uploaded_file, selected_format, llm)
             
     else:
