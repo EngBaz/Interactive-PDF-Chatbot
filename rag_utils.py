@@ -75,7 +75,7 @@ def configure_rag_chain(retriever, llm):
     "formulate a standalone question which can be understood "
     "without the chat history. Do NOT answer the question, "
     "just reformulate it if needed and otherwise return it as is."
-)
+    )
     
     contextualize_prompt = ChatPromptTemplate.from_messages(
         [
@@ -127,7 +127,7 @@ def configure_rag_chain(retriever, llm):
         input_messages_key="input",
         history_messages_key="chat_history",
         output_messages_key="answer",
-        )
+    )
 
     return conversational_rag_chain
 
