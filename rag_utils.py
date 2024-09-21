@@ -172,13 +172,19 @@ def process_file_and_answer(uploaded_file, file_format, llm):
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
     
+    # Welcome message from assistant
+    if not st.session_state.messages:
+        welcome_message = "Hello there, how can I help you today with your document?👋"
+        st.chat_message("assistant").write_stream(stream_data(welcome_message))
+        st.session_state.messages.append({"role": "assistant", "content": welcome_message})
+    
     # Accept user input    
     if prompt := st.chat_input("Ask a question"):
         # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": prompt})
         # Display user message in chat message container
         with st.chat_message("user"):
-            st.markdown(prompt)    
+            st.write_stream(stream_data(prompt))    
         
         with st.chat_message("assistant"):
             
