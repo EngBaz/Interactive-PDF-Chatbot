@@ -196,7 +196,7 @@ def process_file_and_answer(uploaded_file, file_format, llm):
             
             response = conversational_rag_chain.invoke(
                 {"input": prompt},
-                config={"configurable": {"session_id": session}},
+                config={"configurable": {"session_id": "session1"}},
                 )["answer"]
             
             st.write_stream(stream_data(response))
