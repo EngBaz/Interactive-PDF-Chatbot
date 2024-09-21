@@ -69,26 +69,17 @@ def configure_rag_chain(retriever, llm):
         manages chat history, and generates responses based on both the retrieved context and prior conversations.
     """
     
-    contextualize_system_prompt ="""
+    contextualize_q_system_prompt = (
+    "Given a chat history and the latest user question "
+    "which might reference context in the chat history, "
+    "formulate a standalone question which can be understood "
+    "without the chat history. Do NOT answer the question, "
+    "just reformulate it if needed and otherwise return it as is."
+)
     
-    Given a chat history and a user's last question that could refer to previous context or information 
-    from the chat history, your task is to formulate a clear and stand-alone question or statement that 
-    can be understood without reference to the previous conversation.
-
-    If the user's question refers to something previously mentioned in the chat (e.g. follow-up questions, 
-    vague allusions or clarifications), you need to refer back to the chat history, understand the specific 
-    context the user is alluding to, and formulate an accurate, self-contained question or statement that 
-    conveys the full meaning. This conversion is essential because the rephrased version will be used to query 
-    a vector database for relevant information.
-
-    Your goal is to ensure that the rephrased question or statement is as precise and specific as possible, 
-    especially when it comes to follow-up questions or vague allusions, so that it retrieves the most relevant 
-    information from the database.
-    
-    """
     contextualize_prompt = ChatPromptTemplate.from_messages(
         [
-            ("system", contextualize_system_prompt),
+            ("system", contextualize_q_system_prompt),
             MessagesPlaceholder("chat_history"),
             ("human", "{input}"),
         ]
@@ -100,16 +91,20 @@ def configure_rag_chain(retriever, llm):
         contextualize_prompt,
     )
 
-    qa_system_prompt = """You are an assistant for question-answering tasks. \
-    Use the following pieces of retrieved context to answer the question. \
-    If you don't know the answer, just say that you don't know. \
-    Keep the answer concise and clear.\
-    {context}
-    """
+    system_prompt = (
+    "You are an assistant for question-answering tasks. "
+    "Use the following pieces of retrieved context to answer "
+    "the question. If you don't know the answer, say that you "
+    "don't know. Use three sentences maximum and keep the "
+    "answer concise."
+    "say THANK YOU FOR ASKING at the end of your question."
+    "\n\n"
+    "{context}"
+    )
         
     qa_prompt = ChatPromptTemplate.from_messages(
         [
-            ("system", qa_system_prompt),
+            ("system", system_prompt),
             MessagesPlaceholder("chat_history"),
             ("human", "{input}"),
         ]
@@ -153,7 +148,7 @@ def process_file_and_answer(uploaded_file, file_format, llm):
     
     Args:
         uploaded_file: The file uploaded by the user.
-        file_format: The format of the uploaded file (e.g., "pdf", "csv", "txt", or "py").
+        file_format: The format of the uploaded file (e.g., "pdf" or, "txt").
         llm: The large language model used for question-answering.
     """
     
@@ -185,7 +180,7 @@ def process_file_and_answer(uploaded_file, file_format, llm):
     
     # Welcome message from assistant
     if not st.session_state.messages:
-        welcome_message = "Hello there, how can I help you today with your document?👋"
+        welcome_message = "Hello there, ask any question about your document and I will provide you with the relevant information👋"
         st.chat_message("assistant").write_stream(stream_data(welcome_message))
         st.session_state.messages.append({"role": "assistant", "content": welcome_message})
     
@@ -201,7 +196,7 @@ def process_file_and_answer(uploaded_file, file_format, llm):
             
             response = conversational_rag_chain.invoke(
                 {"input": prompt},
-                config={"configurable": {"session_id": "session1"}},
+                config={"configurable": {"session_id": session}},
                 )["answer"]
             
             st.write_stream(stream_data(response))

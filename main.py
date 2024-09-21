@@ -44,7 +44,6 @@ if OPENAI_API_KEY:
     st.title("RAG Chat Assistant🤖")
         
     if uploaded_file:
-        st.session_state.messages = []
         process_file_and_answer(uploaded_file, selected_format, llm)
             
     else:
