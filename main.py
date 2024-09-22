@@ -30,7 +30,7 @@ def main():
     
     with st.sidebar:
             
-        st.header("Setup")
+        st.header("SETUP")
 
         OPENAI_API_KEY = st.text_input(":blue[Enter Your OPENAI API Key:]",
                                         placeholder="Paste your OpenAI API key here (sk-...)",
@@ -42,7 +42,7 @@ def main():
 
         uploaded_file = st.file_uploader("Upload a file:", type=[file_format])
             
-        st.header("Playground")
+        st.header("PARAMETERS")
                 
         max_new_tokens = st.number_input("Select a max token value:", min_value=1, max_value=8000, value=1000)
                 
