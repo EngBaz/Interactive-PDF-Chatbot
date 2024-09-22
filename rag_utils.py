@@ -97,7 +97,6 @@ def configure_rag_chain(retriever, llm):
     "the question. If you don't know the answer, say that you "
     "don't know. Use three sentences maximum and keep the "
     "answer concise."
-    "say THANK YOU FOR ASKING at the end of your question."
     "\n\n"
     "{context}"
     )
@@ -151,7 +150,7 @@ def process_file_and_answer(uploaded_file, file_format, llm):
         file_format: The format of the uploaded file (e.g., "pdf" or, "txt").
         llm: The large language model used for question-answering.
     """
-    
+        
     if file_format == "pdf":
         
         pdf_reader = PdfReader(uploaded_file)
@@ -160,16 +159,11 @@ def process_file_and_answer(uploaded_file, file_format, llm):
     elif file_format == "txt":
         
         data = uploaded_file.read().decode("utf-8")
-            
-    else:
-        
-        pass
 
     retriever = configure_hybrid_search(data)
     
     conversational_rag_chain = configure_rag_chain(retriever, llm)
     
-    # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
     
