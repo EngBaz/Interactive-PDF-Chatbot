@@ -16,7 +16,7 @@ from langchain_community.retrievers import BM25Retriever
 from langchain_cohere import CohereRerank
 
 
-# Function to configure the retrieval with chat history
+
 def configure_hybrid_search(data):
     """
     Configures a hybrid search mechanism that combines semantic and keyword-based retrieval,
@@ -140,60 +140,30 @@ def stream_data(response):
 
 
 
-def process_file_and_answer(uploaded_file, file_format, llm):
-    """
-    Processes an uploaded file based on its format and sets up a Retrieval-Augmented Generation (RAG) chain 
-    to answer questions related to the file.
+def welcome_message():
     
-    Args:
-        uploaded_file: The file uploaded by the user.
-        file_format: The format of the uploaded file (e.g., "pdf" or, "txt").
-        llm: The large language model used for question-answering.
     """
-        
-    if file_format == "pdf":
-        
-        pdf_reader = PdfReader(uploaded_file)
-        data = "".join(page.extract_text() for page in pdf_reader.pages)
-   
-    elif file_format == "txt":
-        
-        data = uploaded_file.read().decode("utf-8")
+    Displays a welcome message to the user if there are no previous messages in the session state. 
+    This function introduces the assistant and prompts the user to enter an API key and upload a file. 
+    The message is only shown once at the start of a new session.
 
-    retriever = configure_hybrid_search(data)
+    Args:
+        None
+
+    Returns:
+        None
+    """
     
-    conversational_rag_chain = configure_rag_chain(retriever, llm)
-    
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-    
-    # Display chat messages from history on app rerun
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-    
-    # Welcome message from assistant
     if not st.session_state.messages:
-        welcome_message = "Hello there, ask any question about your document and I will provide you with the relevant information👋"
+        
+        welcome_message = """
+        
+        Hello there! Please enter your OpenAI API key and specify the format of the file you'd like to upload. 
+        Once you've uploaded your file, feel free to ask any questions about its content, and I'll provide 
+        you with the relevant information. 👋
+        
+        """
         st.chat_message("assistant").write_stream(stream_data(welcome_message))
         st.session_state.messages.append({"role": "assistant", "content": welcome_message})
-    
-    # Accept user input    
-    if prompt := st.chat_input("Ask a question"):
-        # Add user message to chat history
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        # Display user message in chat message container
-        with st.chat_message("user"):
-            st.write_stream(stream_data(prompt))    
         
-        with st.chat_message("assistant"):
-            
-            response = conversational_rag_chain.invoke(
-                {"input": prompt},
-                config={"configurable": {"session_id": "session1"}},
-                )["answer"]
-            
-            st.write_stream(stream_data(response))
-        st.session_state.messages.append({"role": "assistant", "content": response})    
-
-
+         
