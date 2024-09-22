@@ -96,24 +96,24 @@ def main():
 
             conversational_rag_chain = configure_rag_chain(retriever, llm)
      
-    if prompt := st.chat_input("Ask a question"):
-       
-        st.session_state.messages.append({"role": "user", "content": prompt})
+        if prompt := st.chat_input("Ask a question"):
         
-        with st.chat_message("user"): 
+            st.session_state.messages.append({"role": "user", "content": prompt})
             
-            st.write_stream(stream_data(prompt))    
-        
-        with st.chat_message("assistant"):
+            with st.chat_message("user"): 
+                
+                st.write_stream(stream_data(prompt))    
             
-            response = conversational_rag_chain.invoke(
-                {"input": prompt},
-                config={"configurable": {"session_id": "session1"}},
-                )["answer"]
-            
-            st.write_stream(stream_data(response))
-            
-        st.session_state.messages.append({"role": "assistant", "content": response})
+            with st.chat_message("assistant"):
+                
+                response = conversational_rag_chain.invoke(
+                    {"input": prompt},
+                    config={"configurable": {"session_id": "session1"}},
+                    )["answer"]
+                
+                st.write_stream(stream_data(response))
+                
+            st.session_state.messages.append({"role": "assistant", "content": response})
         
 
 if __name__ == "__main__":
