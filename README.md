@@ -28,9 +28,9 @@ To setup this project on your local machine, follow the below steps:
 4. Obtain an API key from OpenAI, Cohere AI and Groq. Store the APIs in a <code>.env</code> file as follows:
     ```console
     
-    $ OPENAI_API_KEY="you api key"
-    $ GROQ_API_KEY="you api key"
-    $ COHERE_API_KEY="you api key"
+    $ OPENAI_API_KEY="your api key"
+    $ GROQ_API_KEY="your api key"
+    $ COHERE_API_KEY="your api key"
     ```
     
 6. Note that the project is built using OpenAI GPT-4. Thus, it is necessary to have an OpenAI API key. Otherwise, for the use of open-source LLMs on huggingface, import your model using the steps below.
