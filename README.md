@@ -25,9 +25,15 @@ To setup this project on your local machine, follow the below steps:
     ```
 3. Install the required dependencies by running <code>pip install -r requirements.txt</code>
 
-4. Obtain an API key from OpenAI and Cohere AI. Store the Cohere API key in a <code>.env</code> file with the corresponsding name <code>COHERE_API_KEY</code>.
+4. Obtain an API key from OpenAI, Cohere AI and Groq. Store the APIs in a <code>.env</code> file as follows:
+    ```console
     
-5. Note that the project is built using OpenAI GPT-4. Thus, it is necessary to have an OpenAI API key. Otherwise, for the use of open-source LLMs on huggingface, import your model using the steps below.
+    $ OPENAI_API_KEY="you api key"
+    $ GROQ_API_KEY="you api key"
+    $ COHERE_API_KEY="you api key"
+    ```
+    
+6. Note that the project is built using OpenAI GPT-4. Thus, it is necessary to have an OpenAI API key. Otherwise, for the use of open-source LLMs on huggingface, import your model using the steps below.
     ```console
     
     $ pip install langchain huggingface_hub
