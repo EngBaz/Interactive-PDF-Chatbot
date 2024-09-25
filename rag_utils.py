@@ -1,7 +1,6 @@
 import time
 import streamlit as st
 
-from PyPDF2 import PdfReader
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_community.vectorstores import FAISS
@@ -10,6 +9,7 @@ from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_openai import OpenAIEmbeddings
+
 from langchain_experimental.text_splitter import SemanticChunker 
 from langchain.retrievers import ContextualCompressionRetriever, EnsembleRetriever
 from langchain_community.retrievers import BM25Retriever
@@ -158,7 +158,7 @@ def welcome_message():
         
         welcome_message = """
         
-        Hello there! Please enter your OpenAI API key and specify the format of the file you'd like to upload. 
+        Hello there! First, please specify the format of the file you'd like to upload. 
         Once you've uploaded your file, feel free to ask any questions about its content, and I'll provide 
         you with the relevant information. 👋
         
