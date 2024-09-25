@@ -1,4 +1,4 @@
-# Hybrid RAG with LangChain, FAISS and Groq Llama3
+# Hybrid RAG with LangChain, FAISS and Groq Llama 3
 
 This project presents an example of a Q&A assistant using LangChain, OpenAI GPT-4, FAISS vectorstore, and Streamlit.
 The assistant can handle conversational context and assist in answering questions related to an uploaded document.
