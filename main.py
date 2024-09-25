@@ -50,7 +50,6 @@ def main():
         if not uploaded_file:
             
             welcome_message()       
-            #st.warning("No file uploaded. Please upload a file to continue.")
             st.stop()
 
         elif uploaded_file.size == 0:
