@@ -32,14 +32,6 @@ To setup this project on your local machine, follow the below steps:
     $ GROQ_API_KEY="your api key"
     $ COHERE_API_KEY="your api key"
     ```
-    
-6. Note that the project is built using OpenAI GPT-4. Thus, it is necessary to have an OpenAI API key. Otherwise, for the use of open-source LLMs on huggingface, import your model using the steps below.
-    ```console
-    
-    $ pip install langchain huggingface_hub
-    $ os.environ['HUGGINGFACE_API_TOKEN'] = 'your_hugging_face_api_token'
-    $ llm = HuggingFaceHub(repo_id="model_name", model_kwargs={'temperature': 0.7, 'max_length': 64})
-    ```
 
 ## Usage
 
