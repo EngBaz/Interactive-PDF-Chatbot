@@ -47,12 +47,12 @@ To use the conversational agent:
 
 [1] Hybrid RAG: https://arxiv.org/pdf/2408.05141
 
-[2] https://arxiv.org/abs/2409.07691
+[2] Rerankers: https://arxiv.org/abs/2409.07691
 
-[3] https://python.langchain.com/v0.2/docs/introduction/
+[3] Corrective-RAG: https://arxiv.org/abs/2401.15884
 
 [4] https://python.langchain.com/docs/tutorials/rag/
 
-[5] https://docs.streamlit.io/develop/tutorials/llms/build-conversational-apps
+[5] https://github.com/mistralai/cookbook/tree/main/third_party/langchain
 
 
