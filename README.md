@@ -1,4 +1,4 @@
-# Advanced RAG with LangChain, FAISS and Groq Llama 3
+# Advanced RAG with LangGraph, FAISS and Groq Llama 3
 
 This project presents an example of a Q&A assistant using LangChain, Groq Llama 3, FAISS vectorstore, and Streamlit.
 The assistant can handle conversational context and assist in answering questions related to an uploaded document.
@@ -11,7 +11,7 @@ The assistant can handle conversational context and assist in answering question
 - [Implementation](#Implementation)
 
 ## Introduction
-The project showcases the implementation of a custom question-answering RAG system that leverages LangChain, an open-source framework, to interact with users in a conversational manner. The assistant answers questions related to a specific uploaded document and uses GPT-4 for natural language understanding and generation.
+The project showcases the implementation of a custom question-answering RAG system that leverages LangGraph, an open-source framework, to interact with users in a conversational manner. The assistant answers questions related to a specific uploaded document and uses advanced RAG techniques such as corrective-RAG.
 
 ## Setup
 
@@ -45,7 +45,7 @@ To use the conversational agent:
 
 ## References
 
-[1] https://arxiv.org/pdf/2408.05141
+[1] Hybrid RAG: https://arxiv.org/pdf/2408.05141
 
 [2] https://arxiv.org/abs/2409.07691
 
