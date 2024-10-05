@@ -8,7 +8,7 @@ The assistant can handle conversational context and assist in answering question
 - [Introduction](#introduction)
 - [Setup](#setup)
 - [Usage](#usage)
-- [Implementation](#Implementation)
+- [References](#References)
 
 ## Introduction
 The project showcases the implementation of a custom question-answering RAG system that leverages LangGraph, an open-source framework, to interact with users in a conversational manner. The assistant answers questions related to a specific uploaded document and uses advanced RAG techniques such as corrective-RAG.
