@@ -1,14 +1,6 @@
-# Interactive PDF Chatbot with LangGraph, FAISS, Groq Llama 3 and Streamlit
+# Interactive PDF Chatbot with LangGraph, FAISS, Groq Llama 3 and, Streamlit
 
-This project presents an example of a Q&A assistant using LangGrapg, Groq Llama 3, FAISS vectorDB, and Streamlit.
-The assistant assists in answering questions related to an uploaded document.
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Setup](#setup)
-- [Usage](#usage)
-- [References](#References)
+![brAIcht](images/brAIcht.png)
 
 ## Introduction
 The project showcases the implementation of a custom question-answering RAG system that leverages LangGraph, an open-source framework, to interact with users in a conversational manner. The assistant answers questions related to a specific uploaded document and uses advanced RAG techniques such as corrective-RAG.
