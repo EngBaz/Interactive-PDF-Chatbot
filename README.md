@@ -1,4 +1,4 @@
-# Interactive PDF Chatbot with LangGraph, FAISS, Groq Llama 3 and, Streamlit
+# Interactive PDF Chatbot with LangGraph, FAISS, Groq LLaMA 3, and Streamlit
 
 ![brAIcht](images/pdf_chatbot.png)
 
