@@ -1,14 +1,6 @@
-# Interactive PDF Chatbot with LangGraph, FAISS, Groq Llama 3 and Streamlit
+# Interactive PDF Chatbot with LangGraph, FAISS, Groq Llama 3 and, Streamlit
 
-This project presents an example of a Q&A assistant using LangGrapg, Groq Llama 3, FAISS vectorDB, and Streamlit.
-The assistant assists in answering questions related to an uploaded document.
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Setup](#setup)
-- [Usage](#usage)
-- [References](#References)
+![brAIcht](images/pdf_chatbot.png)
 
 ## Introduction
 The project showcases the implementation of a custom question-answering RAG system that leverages LangGraph, an open-source framework, to interact with users in a conversational manner. The assistant answers questions related to a specific uploaded document and uses advanced RAG techniques such as corrective-RAG.
@@ -16,7 +8,7 @@ The project showcases the implementation of a custom question-answering RAG syst
 ## Setup
 
 To setup this project on your local machine, follow the below steps:
-1. Clone this repository: <code>git clone github.com/EngBaz/Hybrid-RAG-System</code>
+1. Clone this repository: <code>git clone https://github.com/EngBaz/Interactive-PDF-Chatbot.git</code>
 
 2. Create a virtual enviromnent
    ```console
@@ -27,10 +19,10 @@ To setup this project on your local machine, follow the below steps:
 
 4. Obtain an API key from OpenAI, Cohere AI and Groq. Store the APIs in a <code>.env</code> file as follows:
     ```console
-    
-    $ OPENAI_API_KEY="your api key"
     $ GROQ_API_KEY="your api key"
     $ COHERE_API_KEY="your api key"
+    $ GOOGLE_API_KEY="your api key"
+    $ TAVILY_API_KEY="your api key"
     ```
 
 ## Usage
