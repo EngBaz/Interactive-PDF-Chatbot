@@ -15,6 +15,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain
 from langchain.prompts import ChatPromptTemplate
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -67,13 +68,15 @@ def retrieve_documents(uploaded_file, file_format):
     except Exception as e:
         st.info(f"An error occurred the upload: {str(e)}")
 
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+    
     semantic_chunker = SemanticChunker(
-        OpenAIEmbeddings(),
+        embeddings,
         breakpoint_threshold_type="percentile",
     )
-
+    
     docs = semantic_chunker.create_documents([data])
-    vectorstore = FAISS.from_documents(docs, OpenAIEmbeddings())
+    vectorstore = FAISS.from_documents(docs, embeddings)
 
     similarity_retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
     keyword_retriever = BM25Retriever.from_documents(docs)

@@ -36,9 +36,10 @@ for message in st.session_state.messages:
 
 # API keys
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+#OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")
+COHERE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Initiate the sidebar of the streamlit application
 with st.sidebar:

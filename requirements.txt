@@ -11,3 +11,4 @@ langgraph
 streamlit
 pyPDF2
 pandas
+langchain-google-genai
