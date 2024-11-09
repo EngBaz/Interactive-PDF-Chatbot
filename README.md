@@ -23,6 +23,7 @@ To setup this project on your local machine, follow the below steps:
     $ OPENAI_API_KEY="your api key"
     $ GROQ_API_KEY="your api key"
     $ COHERE_API_KEY="your api key"
+    $ GOOGLE_API_KEY="your api key"
     ```
 
 ## Usage
