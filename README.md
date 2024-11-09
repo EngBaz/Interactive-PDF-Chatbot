@@ -19,11 +19,10 @@ To setup this project on your local machine, follow the below steps:
 
 4. Obtain an API key from OpenAI, Cohere AI and Groq. Store the APIs in a <code>.env</code> file as follows:
     ```console
-    
-    $ OPENAI_API_KEY="your api key"
     $ GROQ_API_KEY="your api key"
     $ COHERE_API_KEY="your api key"
     $ GOOGLE_API_KEY="your api key"
+    $ TAVILY_API_KEY="your api key"
     ```
 
 ## Usage
