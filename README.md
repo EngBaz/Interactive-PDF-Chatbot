@@ -8,7 +8,7 @@ The project showcases the implementation of a custom question-answering RAG syst
 ## Setup
 
 To setup this project on your local machine, follow the below steps:
-1. Clone this repository: <code>git clone github.com/EngBaz/Hybrid-RAG-System</code>
+1. Clone this repository: <code>git clone github.com/EngBaz/Interactive-PDF-Chatbot</code>
 
 2. Create a virtual enviromnent
    ```console
